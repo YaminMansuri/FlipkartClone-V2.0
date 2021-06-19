@@ -23,17 +23,6 @@ const CategoryListComponent = () => {
           categorySubTitle={category.categorySubTitle}
         />
       ))}
-
-      {/* <CategoryItemComponent
-        category="phone"
-        categoryTitle="Best Battery Phones"
-        categorySubTitle="More than 4000 mAh"
-      />
-      <CategoryItemComponent
-        category="phone"
-        categoryTitle="Best Battery Phones"
-        categorySubTitle="More than 4000 mAh"
-      /> */}
     </>
   );
 };
