@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getCategoriesAction } from "../store/productActions";
 import CategoryItemComponent from "./CategoryItemComponent";
+import { getCategoriesAction } from "../store/productActions";
 
 const CategoryListComponent = () => {
   const dispatch = useDispatch();
