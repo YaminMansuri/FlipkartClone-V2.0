@@ -4,6 +4,7 @@ import { makeStyles, SwipeableDrawer, Typography } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 
 import ListComponent from "./ListComponent";
+import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   drawerHeader: {
@@ -12,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
   },
   center: {
-    display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 2),
     color: theme.palette.primary.contrastText,
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const SideDrawerComponent = (props) => {
   const { open, toggleDrawer } = props;
   const sideDrawerStyles = useStyles();
+  const utilClasses = utilityClasses();
 
   return (
     <div>
@@ -34,7 +35,9 @@ const SideDrawerComponent = (props) => {
         onClose={() => toggleDrawer(false)}
       >
         <div
-          className={`${sideDrawerStyles.drawerHeader} ${sideDrawerStyles.center}`}
+          className={`${sideDrawerStyles.drawerHeader}
+            ${sideDrawerStyles.center}
+            ${utilClasses.displayFlex}`}
         >
           <Person className={sideDrawerStyles.personIcon} />
           <Typography>Yamin Mansuri</Typography>

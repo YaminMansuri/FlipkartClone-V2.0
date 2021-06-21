@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    display: "flex",
     color: theme.palette.primary.contrastText,
 
     [theme.breakpoints.up("md")]: {
@@ -95,9 +94,15 @@ const NavBarComponent = () => {
         <IconButton className={navBarStyles.icon}>
           <Search />
         </IconButton>
+
+        <IconButton className={navBarStyles.icon}>
+          <ShoppingCart />
+        </IconButton>
+
         <div className={`${navBarStyles.searchField} ${navBarStyles.flexOne}`}>
           <SearchComponent />
         </div>
+
         <Button color="primary" className={navBarStyles.btnStyle}>
           Yamin
         </Button>

@@ -5,9 +5,6 @@ import { Typography, makeStyles } from "@material-ui/core";
 import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
-  semiBold: {
-    fontWeight: "500",
-  },
   productPrice: {
     margin: 5,
     textDecoration: "line-through",
@@ -15,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PriceComponent = (props) => {
-  const { price, discount } = props;
+  const { price, discount, variant } = props;
   const priceStyles = useStyles();
   const utilClasses = utilityClasses();
 
@@ -24,11 +21,12 @@ const PriceComponent = (props) => {
   };
 
   return (
-    <Typography className={utilClasses.lineHeight} noWrap>
+    <Typography className={utilClasses.spacing} noWrap>
       <Typography
         component="span"
         color="textPrimary"
-        className={`${priceStyles.semiBold}`}
+        variant={variant}
+        className={`${utilClasses.bold}`}
       >
         ₹{getPrice()}
       </Typography>
@@ -39,7 +37,11 @@ const PriceComponent = (props) => {
       >
         ₹{price}
       </Typography>
-      <Typography component="span" color="secondary">
+      <Typography
+        component="span"
+        color="secondary"
+        className={utilClasses.semiBold}
+      >
         {discount}% off
       </Typography>
     </Typography>

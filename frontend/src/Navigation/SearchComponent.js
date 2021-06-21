@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     top: 0,
     height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     padding: theme.spacing(0, 2),
   },
   inputRoot: {

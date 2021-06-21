@@ -7,6 +7,13 @@ const customTheme = createMuiTheme({
     },
     secondary: {
       main: "#388e3c",
+      light: "#14be47",
+    },
+    yellow: {
+      main: "#ff9f00",
+    },
+    orange: {
+      main: "#fb641b",
     },
     contrastThreshold: 3,
     tonalOffset: 0.2,

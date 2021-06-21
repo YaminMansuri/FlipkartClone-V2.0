@@ -24,12 +24,6 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: 260,
   },
-  center: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 2),
-    color: theme.palette.primary.contrastText,
-  },
 }));
 
 const ListComponent = () => {

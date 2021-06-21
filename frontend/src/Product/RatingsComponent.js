@@ -29,7 +29,7 @@ const RatingsComponent = (props) => {
   const utilClasses = utilityClasses();
 
   return (
-    <div className={`${utilClasses.displayFlex} ${utilClasses.lineHeight}`}>
+    <div className={`${utilClasses.displayFlex} ${utilClasses.spacing}`}>
       <span
         className={`${ratingsStyles.productRatings} ${utilClasses.displayFlex}`}
         color="secondary"

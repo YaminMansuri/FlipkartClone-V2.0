@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   productImage: {
-    display: "flex",
     width: "45%",
     [theme.breakpoints.up("sm")]: {
       width: "min-content",
@@ -46,22 +45,25 @@ const ProductItemComponent = (props) => {
         <img
           src={product.smallImage}
           alt={product.name}
-          className={`${productItemStyles.productImage} ${utilClasses.marginAuto}`}
+          className={`${productItemStyles.productImage}
+            ${utilClasses.marginAuto}
+            ${utilClasses.displayFlex}`}
         />
 
-        <Typography
-          color="textSecondary"
-          className={productItemStyles.marginTop}
-        >
+        <Typography color="textSecondary" className={utilClasses.spacing}>
           {product.companyName}
         </Typography>
 
-        <ProductTitleComponent title={product.name} />
+        <ProductTitleComponent title={product.name} wrap={true} />
         <RatingsComponent
           ratings={product.ratings}
           numOfRatings={product.numOfRatings}
         />
-        <PriceComponent price={product.price} discount={product.discount} />
+        <PriceComponent
+          price={product.price}
+          discount={product.discount}
+          variant="body1"
+        />
       </Link>
     </div>
   );
