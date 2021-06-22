@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { makeStyles, Paper } from "@material-ui/core";
-import { ShoppingCart, FlashOn } from "@material-ui/icons";
 
 import { getProductsAction } from "../Home/store/productActions";
 import utilityClasses from "../util/utilityClasses";
 import ImageComponent from "./ImageComponent";
 import ProductDetailsComponent from "./ProductDetailsComponent";
-import ButtonComponent from "../Button/ButtonComponent";
+import ButtonsComponent from "./ButtonsComponent";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,19 +20,7 @@ const useStyles = makeStyles((theme) => ({
   paperStyle: {
     [theme.breakpoints.up("md")]: {
       width: "85%",
-      margin: "auto",
-    },
-  },
-  yellow: {
-    backgroundColor: theme.palette.yellow.main,
-    "&:hover": {
-      backgroundColor: "#ffb339",
-    },
-  },
-  orange: {
-    backgroundColor: theme.palette.orange.main,
-    "&:hover": {
-      backgroundColor: "#ff7936",
+      margin: "0 auto",
     },
   },
   mobileView: {
@@ -50,7 +37,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btnMargin: {
-    margin: theme.spacing(0, 1),
+    margin: theme.spacing(0, 0.5),
+  },
+  sticky: {
+    height: "70%",
+    flexDirection: "column",
+    justifyContent: "center",
+    [theme.breakpoints.up("md")]: {
+      position: "sticky",
+      top: theme.spacing(8),
+    },
   },
 }));
 
@@ -59,68 +55,57 @@ const ProductDetailsPage = () => {
   const utilClasses = utilityClasses();
 
   const dispatch = useDispatch();
-  const productId = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getProductsAction());
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   }, [dispatch]);
 
   const products = useSelector((state) => state.productsReducer.products);
 
-  const product = products.find((product) => product._id === productId.id);
+  const product = products.find((product) => product._id === id);
 
   return (
     <>
       {product && (
-        <Paper className={`${productDetailsStyle.paperStyle}`}>
-          <div className={productDetailsStyle.container}>
-            <div className={utilClasses.flexOne}>
-              <ImageComponent
-                largeImage={product.largeImage}
-                name={product.name}
-              />
+        <>
+          <Paper
+            className={`
+              ${productDetailsStyle.paperStyle}
+              ${productDetailsStyle.container}
+            `}
+          >
+            <div className={utilClasses.flex}>
               <div
-                className={`${productDetailsStyle.desktopView} 
-                  ${utilClasses.justifyBetween}`}
+                className={`${productDetailsStyle.sticky} ${utilClasses.displayFlex}`}
               >
-                <ButtonComponent
-                  color={productDetailsStyle.yellow}
-                  margin={productDetailsStyle.btnMargin}
-                  icon={<ShoppingCart />}
-                >
-                  Add to Cart
-                </ButtonComponent>
-                <ButtonComponent
-                  color={productDetailsStyle.orange}
-                  icon={<FlashOn />}
-                >
-                  Add to Cart
-                </ButtonComponent>
+                <ImageComponent
+                  largeImage={product.largeImage}
+                  name={product.name}
+                />
+                <ButtonsComponent
+                  className={`
+                    ${productDetailsStyle.desktopView}
+                    ${utilClasses.justifyBetween}
+                  `}
+                  btnMargin={productDetailsStyle.btnMargin}
+                />
               </div>
             </div>
             <ProductDetailsComponent
               product={product}
               className={utilClasses.flexTwo}
             />
-          </div>
-          <div
-            className={`${productDetailsStyle.mobileView} ${utilClasses.displayFlex}`}
-          >
-            <ButtonComponent
-              color={productDetailsStyle.yellow}
-              icon={<ShoppingCart />}
-            >
-              Add to Cart
-            </ButtonComponent>
-            <ButtonComponent
-              color={productDetailsStyle.orange}
-              icon={<FlashOn />}
-            >
-              Buy Now
-            </ButtonComponent>
-          </div>
-        </Paper>
+          </Paper>
+
+          <ButtonsComponent
+            className={`
+              ${productDetailsStyle.mobileView}
+              ${utilClasses.displayFlex}
+            `}
+          />
+        </>
       )}
     </>
   );

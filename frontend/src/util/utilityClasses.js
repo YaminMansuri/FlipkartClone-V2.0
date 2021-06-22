@@ -4,6 +4,9 @@ export default makeStyles((theme) => ({
   displayFlex: {
     display: "flex",
   },
+  flex: {
+    flex: 1.3,
+  },
   flexOne: {
     flex: 1,
   },
@@ -21,6 +24,9 @@ export default makeStyles((theme) => ({
   },
   marginAuto: {
     margin: "auto",
+  },
+  marginTwo: {
+    margin: theme.spacing(2, 0),
   },
   justifyBetween: {
     justifyContent: "space-between",

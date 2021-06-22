@@ -5,7 +5,6 @@ import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   btn: {
-    width: "100%",
     color: "white",
     borderRadius: "0",
     padding: theme.spacing(1.8),

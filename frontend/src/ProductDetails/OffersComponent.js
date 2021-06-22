@@ -22,8 +22,12 @@ const OffersComponent = () => {
 
   return (
     <>
-      <Typography className={utilClasses.semiBold}>Available offers</Typography>
-      <div className={`${utilClasses.displayFlex} ${utilClasses.spacing}`}>
+      <Typography
+        className={`${utilClasses.semiBold} ${utilClasses.marginTwo}`}
+      >
+        Available offers
+      </Typography>
+      <div className={`${utilClasses.displayFlex} ${utilClasses.marginTwo}`}>
         <LocalOffer className={offerStyle.iconStyle} />
         <Typography component="span" variant="body2">
           <span className={utilClasses.semiBold}>Bank Offer</span> 10% off on
@@ -33,7 +37,7 @@ const OffersComponent = () => {
           </span>
         </Typography>
       </div>
-      <div className={`${utilClasses.displayFlex} ${utilClasses.spacing}`}>
+      <div className={`${utilClasses.displayFlex} ${utilClasses.marginTwo}`}>
         <LocalOffer className={offerStyle.iconStyle} />
         <Typography component="span" variant="body2">
           <span className={utilClasses.semiBold}>Bank Offer</span> 10% off on
@@ -44,7 +48,7 @@ const OffersComponent = () => {
           </span>
         </Typography>
       </div>
-      <div className={`${utilClasses.displayFlex} ${utilClasses.spacing}`}>
+      <div className={`${utilClasses.displayFlex} ${utilClasses.marginTwo}`}>
         <LocalOffer className={offerStyle.iconStyle} />
         <Typography component="span" variant="body2">
           <span className={utilClasses.semiBold}>Bank Offer</span> 5% Unlimited
@@ -54,7 +58,7 @@ const OffersComponent = () => {
           </span>
         </Typography>
       </div>
-      <div className={`${utilClasses.displayFlex} ${utilClasses.spacing}`}>
+      <div className={`${utilClasses.displayFlex} ${utilClasses.marginTwo}`}>
         <LocalOffer className={offerStyle.iconStyle} />
         <Typography component="span" variant="body2">
           <span className={utilClasses.semiBold}>Special Price</span> Extra
@@ -64,6 +68,12 @@ const OffersComponent = () => {
           </span>
         </Typography>
       </div>
+      <Typography
+        variant="body2"
+        className={`${offerStyle.blueColor} ${utilClasses.semiBold}`}
+      >
+        View 6 more offers
+      </Typography>
     </>
   );
 };

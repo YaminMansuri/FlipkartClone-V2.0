@@ -54,7 +54,7 @@ const ProductItemComponent = (props) => {
           {product.companyName}
         </Typography>
 
-        <ProductTitleComponent title={product.name} wrap={true} />
+        <ProductTitleComponent title={product.name} wrap={true} variant="body1" />
         <RatingsComponent
           ratings={product.ratings}
           numOfRatings={product.numOfRatings}

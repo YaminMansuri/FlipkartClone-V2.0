@@ -5,13 +5,16 @@ import { Typography } from "@material-ui/core";
 import utilityClasses from "../util/utilityClasses";
 
 const ProductTitleComponent = (props) => {
-  const { title, wrap } = props;
+  const { title, variant, wrap } = props;
   const utilClasses = utilityClasses();
 
   return (
     <Typography
       className={`
-      ${utilClasses.spacing} ${utilClasses.semiBold}`}
+        ${utilClasses.spacing} 
+        ${utilClasses.semiBold}
+      `}
+      variant={variant}
       noWrap={wrap}
     >
       {title}
