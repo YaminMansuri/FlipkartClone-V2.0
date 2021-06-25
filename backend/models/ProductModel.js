@@ -1,43 +1,43 @@
 import mongoose from "mongoose";
 
 const ProductModel = new mongoose.Schema({
-  productCategory: {
+  category: {
     type: String,
     required: true,
   },
-  productName: {
+  name: {
     type: String,
     required: true,
   },
-  productImage: {
+  smallImage: {
     type: String,
     required: true,
   },
-  productDetailImage: {
+  largeImage: {
     type: String,
     required: true,
   },
-  productRatings: {
+  ratings: {
     type: Number,
     required: true,
   },
-  productNumOfRatings: {
+  numOfRatings: {
     type: Number,
     required: true,
   },
-  productPrice: {
+  price: {
     type: Number,
     required: true,
   },
-  productDiscount: {
+  discount: {
     type: Number,
     required: true,
   },
-  productDetails: {
+  details: {
     type: String,
     required: true,
   },
-  productHighlights: {
+  highlights: {
     type: Array,
     required: true,
   },

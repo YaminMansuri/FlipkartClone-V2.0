@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -13,15 +13,10 @@ import { Search, Menu, ShoppingCart } from "@material-ui/icons";
 
 import SearchComponent from "./SearchComponent";
 import SideDrawerComponent from "./SideDrawerComponent";
+import Auth from "../Auth/Auth";
+import { AuthContext } from "../shared/context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
-  searchField: {
-    display: "none",
-
-    [theme.breakpoints.up("md")]: {
-      display: "block",
-    },
-  },
   icon: {
     color: theme.palette.primary.contrastText,
 
@@ -46,13 +41,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.3rem",
   },
   btnStyle: {
-    display: "none",
     textTransform: "none",
     fontWeight: "bold",
-
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
   },
   toolBarStyle: {
     [theme.breakpoints.up("md")]: {
@@ -60,64 +50,99 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
     },
   },
+  desktopView: {
+    display: "none",
+
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
 }));
 
 const NavBarComponent = () => {
+  const auth = useContext(AuthContext);
   const navBarStyles = useStyles();
 
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const toggleDrawer = (open) => {
     setOpenDrawer(open);
   };
 
+  const handleOpenLoginDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseLoginDialog = () => {
+    setOpenDialog(false);
+  };
+
   return (
-    <AppBar position="sticky">
-      <Toolbar className={navBarStyles.toolBarStyle}>
-        <SideDrawerComponent
-          open={openDrawer}
-          setOpen={setOpenDrawer}
-          toggleDrawer={toggleDrawer}
-        />
+    <>
+      <AppBar position="sticky">
+        <Toolbar className={navBarStyles.toolBarStyle}>
+          <SideDrawerComponent
+            open={openDrawer}
+            setOpen={setOpenDrawer}
+            toggleDrawer={toggleDrawer}
+          />
 
-        <IconButton
-          className={navBarStyles.icon}
-          onClick={() => toggleDrawer(true)}
-        >
-          <Menu />
-        </IconButton>
+          <IconButton
+            className={navBarStyles.icon}
+            onClick={() => toggleDrawer(true)}
+          >
+            <Menu />
+          </IconButton>
 
-        <Link to="/" className={`${navBarStyles.link} ${navBarStyles.flexOne}`}>
-          <Typography className={`${navBarStyles.logo}`}>Flipkart</Typography>
-        </Link>
+          <Link
+            to="/"
+            className={`${navBarStyles.link} ${navBarStyles.flexOne}`}
+          >
+            <Typography className={`${navBarStyles.logo}`}>Flipkart</Typography>
+          </Link>
 
-        <IconButton className={navBarStyles.icon}>
-          <Search />
-        </IconButton>
+          <IconButton className={navBarStyles.icon}>
+            <Search />
+          </IconButton>
 
-        <IconButton className={navBarStyles.icon}>
-          <ShoppingCart />
-        </IconButton>
+          <IconButton className={navBarStyles.icon}>
+            <ShoppingCart />
+          </IconButton>
 
-        <div className={`${navBarStyles.searchField} ${navBarStyles.flexOne}`}>
-          <SearchComponent />
-        </div>
+          <div
+            className={`${navBarStyles.desktopView} ${navBarStyles.flexOne}`}
+          >
+            <SearchComponent />
+          </div>
 
-        <Button color="primary" className={navBarStyles.btnStyle}>
-          Yamin
-        </Button>
-        <Button color="primary" className={navBarStyles.btnStyle}>
-          More
-        </Button>
-        <Button
-          color="primary"
-          className={navBarStyles.btnStyle}
-          startIcon={<ShoppingCart />}
-        >
-          Cart
-        </Button>
-      </Toolbar>
-    </AppBar>
+          {auth.isLoggedIn ? null : (
+            <Button
+              color="primary"
+              onClick={handleOpenLoginDialog}
+              className={navBarStyles.btnStyle}
+            >
+              Login
+            </Button>
+          )}
+
+          <Button
+            color="primary"
+            className={`${navBarStyles.btnStyle} ${navBarStyles.desktopView}`}
+          >
+            More
+          </Button>
+          <Button
+            color="primary"
+            className={`${navBarStyles.btnStyle} ${navBarStyles.desktopView}`}
+            startIcon={<ShoppingCart />}
+          >
+            Cart
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Auth open={openDialog} handleClose={handleCloseLoginDialog} />
+    </>
   );
 };
 

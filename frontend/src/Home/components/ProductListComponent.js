@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@material-ui/core";
 
 import ProductItemComponent from "./ProductItemComponent";
-import { getProductsAction } from "../../Home/store/productActions";
+import { getProductsAction } from "../store/productActions";
 
 const ProductListComponent = (props) => {
   const { category } = props;

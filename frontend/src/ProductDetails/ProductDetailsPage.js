@@ -40,19 +40,19 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0.5),
   },
   sticky: {
-    height: "70%",
     flexDirection: "column",
     justifyContent: "center",
     [theme.breakpoints.up("md")]: {
+      height: "75vh",
       position: "sticky",
-      top: theme.spacing(8),
+      top: theme.spacing(3),
     },
   },
 }));
 
 const ProductDetailsPage = () => {
   const productDetailsStyle = useStyles();
-  const utilClasses = utilityClasses();
+  const utilClasses = utilityClasses([]);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -63,7 +63,6 @@ const ProductDetailsPage = () => {
   }, [dispatch]);
 
   const products = useSelector((state) => state.productsReducer.products);
-
   const product = products.find((product) => product._id === id);
 
   return (

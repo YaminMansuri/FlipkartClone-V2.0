@@ -41,7 +41,7 @@ const CategoryComponent = (props) => {
           </Button>
         }
         title={categoryTitle}
-        subheader={categorySubTitle}
+        subheader={categorySubTitle}  
       />
 
       <Divider />
