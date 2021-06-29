@@ -41,6 +41,7 @@ export const signup = async (req, res) => {
     res.header("authorization", token).json({
       userId: registeredUser._id,
       email: registeredUser.email,
+      name: registeredUser.name,
       token: token,
     });
   } catch (error) {
@@ -75,6 +76,7 @@ export const login = async (req, res) => {
   res.header("authorization", token).json({
     userId: findUser._id,
     email: findUser.email,
+    name: findUser.name,
     token: token,
   });
 };

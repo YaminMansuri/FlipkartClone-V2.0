@@ -9,12 +9,13 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Search, Menu, ShoppingCart } from "@material-ui/icons";
+import { Search, Menu, ShoppingCart, Person } from "@material-ui/icons";
 
 import SearchComponent from "./SearchComponent";
 import SideDrawerComponent from "./SideDrawerComponent";
 import Auth from "../Auth/Auth";
-import { AuthContext } from "../shared/context/auth-context";
+import { AuthContext } from "../shared/context/AuthContext";
+import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -23,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-  },
-  flexOne: {
-    flexGrow: 1,
   },
   link: {
     textDecoration: "none",
@@ -50,18 +48,12 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
     },
   },
-  desktopView: {
-    display: "none",
-
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
 }));
 
 const NavBarComponent = () => {
   const auth = useContext(AuthContext);
   const navBarStyles = useStyles();
+  const utilClasses = utilityClasses();
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -71,7 +63,7 @@ const NavBarComponent = () => {
   };
 
   const handleOpenLoginDialog = () => {
-    setOpenDialog(true);
+    !auth.isLoggedIn && setOpenDialog(true);
   };
 
   const handleCloseLoginDialog = () => {
@@ -97,7 +89,7 @@ const NavBarComponent = () => {
 
           <Link
             to="/"
-            className={`${navBarStyles.link} ${navBarStyles.flexOne}`}
+            className={`${navBarStyles.link} ${utilClasses.flexOne}`}
           >
             <Typography className={`${navBarStyles.logo}`}>Flipkart</Typography>
           </Link>
@@ -111,30 +103,35 @@ const NavBarComponent = () => {
           </IconButton>
 
           <div
-            className={`${navBarStyles.desktopView} ${navBarStyles.flexOne}`}
+            className={`${utilClasses.desktopView} ${utilClasses.flexOne}`}
           >
             <SearchComponent />
           </div>
 
-          {auth.isLoggedIn ? null : (
-            <Button
-              color="primary"
-              onClick={handleOpenLoginDialog}
-              className={navBarStyles.btnStyle}
-            >
-              Login
-            </Button>
-          )}
+          <Button
+            color="primary"
+            onClick={handleOpenLoginDialog}
+            className={navBarStyles.btnStyles}
+          >
+            {auth.isLoggedIn ? (
+              <>
+                <span className={utilClasses.desktopView}>{auth.name}</span>
+                <Person className={utilClasses.mobileView} />
+              </>
+            ) : (
+              "Login"
+            )}
+          </Button>
 
           <Button
             color="primary"
-            className={`${navBarStyles.btnStyle} ${navBarStyles.desktopView}`}
+            className={`${navBarStyles.btnStyle} ${utilClasses.desktopView}`}
           >
             More
           </Button>
           <Button
             color="primary"
-            className={`${navBarStyles.btnStyle} ${navBarStyles.desktopView}`}
+            className={`${navBarStyles.btnStyle} ${utilClasses.desktopView}`}
             startIcon={<ShoppingCart />}
           >
             Cart

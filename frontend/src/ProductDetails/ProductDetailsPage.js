@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 
 import { makeStyles, Paper } from "@material-ui/core";
 
-import { getProductsAction } from "../Home/store/productActions";
 import utilityClasses from "../util/utilityClasses";
 import ImageComponent from "./ImageComponent";
 import ProductDetailsComponent from "./ProductDetailsComponent";
 import ButtonsComponent from "./ButtonsComponent";
+import { getProductDetailsAction } from "../store/Actions/productActions";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,12 +30,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  desktopView: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
   btnMargin: {
     margin: theme.spacing(0, 0.5),
   },
@@ -48,22 +42,24 @@ const useStyles = makeStyles((theme) => ({
       top: theme.spacing(3),
     },
   },
+  flexGrow: {
+    flex: 1.3,
+  },
 }));
 
 const ProductDetailsPage = () => {
   const productDetailsStyle = useStyles();
-  const utilClasses = utilityClasses([]);
+  const utilClasses = utilityClasses();
 
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { productId } = useParams();
 
   useEffect(() => {
-    dispatch(getProductsAction());
+    dispatch(getProductDetailsAction(productId));
     window.scrollTo(0, 0);
-  }, [dispatch]);
+  }, [dispatch, productId]);
 
-  const products = useSelector((state) => state.productsReducer.products);
-  const product = products.find((product) => product._id === id);
+  const product = useSelector((state) => state.productDetailsReducer.product);
 
   return (
     <>
@@ -75,7 +71,7 @@ const ProductDetailsPage = () => {
               ${productDetailsStyle.container}
             `}
           >
-            <div className={utilClasses.flex}>
+            <div className={productDetailsStyle.flexGrow}>
               <div
                 className={`${productDetailsStyle.sticky} ${utilClasses.displayFlex}`}
               >
@@ -85,7 +81,7 @@ const ProductDetailsPage = () => {
                 />
                 <ButtonsComponent
                   className={`
-                    ${productDetailsStyle.desktopView}
+                    ${utilClasses.desktopView}
                     ${utilClasses.justifyBetween}
                   `}
                   btnMargin={productDetailsStyle.btnMargin}

@@ -4,9 +4,6 @@ export default makeStyles((theme) => ({
   displayFlex: {
     display: "flex",
   },
-  flex: {
-    flex: 1.3,
-  },
   flexOne: {
     flex: 1,
   },
@@ -30,5 +27,19 @@ export default makeStyles((theme) => ({
   },
   justifyBetween: {
     justifyContent: "space-between",
+  },
+  desktopView: {
+    display: "none",
+
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  mobileView: {
+    display: "flex",
+
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
 }));

@@ -5,20 +5,23 @@ import HomePage from "./Home/pages/HomePage";
 import NavBarComponent from "./Navigation/NavBarComponent";
 import ProductDetailsPage from "./ProductDetails/ProductDetailsPage";
 
-import { AuthContext } from "./shared/context/auth-context";
+import { AuthContext } from "./shared/context/AuthContext";
 
 const App = () => {
   const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [name, setName] = useState("");
 
-  const login = useCallback((uid, token) => {
+  const login = useCallback((uid, name, token) => {
     setToken(token);
     setUserId(uid);
+    setName(name);
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    setName(null);
   }, []);
 
   let routes;
@@ -29,7 +32,7 @@ const App = () => {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path="/product/:id" exact>
+        <Route path="/product/:productId" exact>
           <ProductDetailsPage />
         </Route>
       </Switch>
@@ -51,6 +54,7 @@ const App = () => {
         isLoggedIn: !!token,
         token: token,
         userId: userId,
+        name: name,
         login: login,
         logout: logout,
       }}

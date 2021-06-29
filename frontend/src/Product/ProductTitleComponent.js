@@ -12,7 +12,6 @@ const ProductTitleComponent = (props) => {
     <Typography
       className={`
         ${utilClasses.spacing} 
-        ${utilClasses.semiBold}
       `}
       variant={variant}
       noWrap={wrap}

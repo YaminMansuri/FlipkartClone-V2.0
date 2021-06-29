@@ -11,8 +11,8 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import { loginApi, signupApi } from "../Api/authApi";
-import { AuthContext } from "../shared/context/auth-context";
+import { loginApi, signupApi } from "../store/Api/authApi";
+import { AuthContext } from "../shared/context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,7 +43,6 @@ const Auth = (props) => {
     const name = event.target.name;
     const value = event.target.value;
     setUserState({ ...userState, [name]: value });
-    console.log(name, value);
   };
 
   const onSubmit = (event) => {
@@ -58,20 +57,25 @@ const Auth = (props) => {
   const login = async () => {
     try {
       const { data } = await loginApi(userState);
-      auth.login(data.userId, data.token);
+      console.log(data.name);
+      auth.login(data.userId, data.name, data.token);
       console.log("User logged in");
+      handleClose();
     } catch (error) {
       console.log(error);
+      console.log("Authentication Failed");
     }
   };
 
   const signup = async () => {
     try {
       const { data } = await signupApi(userState);
-      auth.login(data.userId, data.token);
+      auth.login(data.userId, data.name, data.token);
       console.log("User signed up");
+      handleClose();
     } catch (error) {
       console.log(error);
+      console.log("Authentication Failed");
     }
   };
 

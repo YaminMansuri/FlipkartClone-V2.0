@@ -22,16 +22,17 @@ const HighlightComponent = (props) => {
       >
         Highlights
       </Typography>
-      {highlights.map((highlight, index) => (
-        <Typography
-          key={index}
-          component="li"
-          variant="body2"
-          className={`${utilClasses.spacing} ${highlightStyle.highlightMargin}`}
-        >
-          {highlight}
-        </Typography>
-      ))}
+      {highlights &&
+        highlights.map((highlight, index) => (
+          <Typography
+            key={index}
+            component="li"
+            variant="body2"
+            className={`${utilClasses.spacing} ${highlightStyle.highlightMargin}`}
+          >
+            {highlight}
+          </Typography>
+        ))}
     </div>
   );
 };

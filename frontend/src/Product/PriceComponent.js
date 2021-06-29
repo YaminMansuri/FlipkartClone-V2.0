@@ -16,7 +16,7 @@ const PriceComponent = (props) => {
   const priceStyles = useStyles();
   const utilClasses = utilityClasses();
 
-  const getPrice = () => {
+  const calculatePrice = () => {
     return price - (price * discount) / 100;
   };
 
@@ -26,9 +26,9 @@ const PriceComponent = (props) => {
         component="span"
         color="textPrimary"
         variant={variant}
-        className={`${utilClasses.bold}`}
+        className={utilClasses.bold}
       >
-        ₹{getPrice()}
+        ₹{calculatePrice()}
       </Typography>
       <Typography
         component="span"

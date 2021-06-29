@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CategoryItemComponent from "./CategoryItemComponent";
-import { getCategoriesAction } from "../store/productActions";
+import { getCategoriesAction } from "../../store/Actions/productActions";
 
 const CategoryListComponent = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,8 @@ const CategoryListComponent = () => {
     dispatch(getCategoriesAction());
   }, [dispatch]);
 
-  const categories = useSelector((state) => state.productsReducer.categories);
+  // const categories = useSelector((state) => state.productsReducer.categories);
+  const categories = useSelector((state) => state.categoriesReducer.categories);
 
   return (
     <>

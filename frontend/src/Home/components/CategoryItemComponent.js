@@ -14,6 +14,7 @@ import ProductListComponent from "./ProductListComponent";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: theme.spacing(1, 0.8),
+    
     [theme.breakpoints.up("sm")]: {
       margin: theme.spacing(1.5),
       padding: "0.5rem",
