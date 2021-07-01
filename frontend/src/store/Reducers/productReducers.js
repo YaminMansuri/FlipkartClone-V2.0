@@ -23,7 +23,7 @@ const productState = {
   error: "",
 };
 
-export const getCategoriesReducer = (state = categoriesState, action) => {
+export const categoriesReducer = (state = categoriesState, action) => {
   switch (action.type) {
     case GET_CATEGORIES_SUCCESS:
       return updateState(state, { categories: action.payload, error: "" });
@@ -34,7 +34,7 @@ export const getCategoriesReducer = (state = categoriesState, action) => {
   }
 };
 
-export const getProductsReducer = (state = productsState, action) => {
+export const productsReducer = (state = productsState, action) => {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS:
       return updateState(state, { products: action.payload, error: "" });
@@ -45,7 +45,7 @@ export const getProductsReducer = (state = productsState, action) => {
   }
 };
 
-export const getProductDetailsReducer = (state = productState, action) => {
+export const productDetailsReducer = (state = productState, action) => {
   switch (action.type) {
     case GET_PRODUCT_DETAILS_SUCESS:
       return updateState(state, { product: action.payload, error: "" });
