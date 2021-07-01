@@ -27,6 +27,7 @@ export const signup = async (req, res) => {
     name,
     email,
     password: hashedPassword,
+    cart: { items: [] },
   });
 
   let registeredUser;

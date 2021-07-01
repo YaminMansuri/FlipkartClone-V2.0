@@ -1,9 +1,12 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core";
 import { ShoppingCart, FlashOn } from "@material-ui/icons";
 
 import ButtonComponent from "../Button/ButtonComponent";
+import { AuthContext } from "../shared/context/AuthContext";
+import { useParams } from "react-router-dom";
+import { addToCartAction } from "../store/Actions/shopActions";
 
 const useStyles = makeStyles((theme) => ({
   yellow: {
@@ -23,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
 const ButtonsComponent = (props) => {
   const { className, btnMargin } = props;
   const buttonsStyle = useStyles();
+  const { userId } = useContext(AuthContext);
+  const { productId } = useParams();
+  console.log(productId);
+
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    console.log("Clicked");
+    dispatch(addToCartAction(userId, productId));
+  };
 
   return (
     <div className={className}>
@@ -30,6 +43,7 @@ const ButtonsComponent = (props) => {
         color={buttonsStyle.yellow}
         margin={btnMargin}
         icon={<ShoppingCart />}
+        onClick={addToCartHandler}
       >
         Add to Cart
       </ButtonComponent>

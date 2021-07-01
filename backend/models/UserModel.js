@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-
-const UserSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -12,6 +12,19 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  cart: {
+    items: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          ref: "products",
+        },
+        quantity: {
+          type: Number,
+        },
+      },
+    ],
   },
 });
 

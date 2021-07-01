@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   link: {
-    textDecoration: "none",
     color: "white",
 
     [theme.breakpoints.up("md")]: {
@@ -47,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
       width: "70%",
       margin: "auto",
     },
+  },
+  noTextDecoration: {
+    textDecoration: "none",
   },
 }));
 
@@ -89,7 +91,11 @@ const NavBarComponent = () => {
 
           <Link
             to="/"
-            className={`${navBarStyles.link} ${utilClasses.flexOne}`}
+            className={`
+              ${navBarStyles.link} 
+              ${navBarStyles.noTextDecoration} 
+              ${utilClasses.flexOne}
+            `}
           >
             <Typography className={`${navBarStyles.logo}`}>Flipkart</Typography>
           </Link>
@@ -98,13 +104,13 @@ const NavBarComponent = () => {
             <Search />
           </IconButton>
 
-          <IconButton className={navBarStyles.icon}>
-            <ShoppingCart />
-          </IconButton>
+          <Link to="/cart">
+            <IconButton className={navBarStyles.icon}>
+              <ShoppingCart />
+            </IconButton>
+          </Link>
 
-          <div
-            className={`${utilClasses.desktopView} ${utilClasses.flexOne}`}
-          >
+          <div className={`${utilClasses.desktopView} ${utilClasses.flexOne}`}>
             <SearchComponent />
           </div>
 
@@ -129,13 +135,16 @@ const NavBarComponent = () => {
           >
             More
           </Button>
-          <Button
-            color="primary"
-            className={`${navBarStyles.btnStyle} ${utilClasses.desktopView}`}
-            startIcon={<ShoppingCart />}
-          >
-            Cart
-          </Button>
+
+          <Link to="/cart" className={navBarStyles.noTextDecoration}>
+            <Button
+              color="primary"
+              className={`${navBarStyles.btnStyle} ${utilClasses.desktopView}`}
+              startIcon={<ShoppingCart />}
+            >
+              Cart
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <Auth open={openDialog} handleClose={handleCloseLoginDialog} />

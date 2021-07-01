@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import HomePage from "./Home/pages/HomePage";
 import NavBarComponent from "./Navigation/NavBarComponent";
 import ProductDetailsPage from "./ProductDetails/ProductDetailsPage";
-
+import CartPage from "./Cart/CartPage";
 import { AuthContext } from "./shared/context/AuthContext";
 
 const App = () => {
@@ -35,6 +35,9 @@ const App = () => {
         <Route path="/product/:productId" exact>
           <ProductDetailsPage />
         </Route>
+        <Route path="/cart" exact>
+          <CartPage />
+        </Route>
       </Switch>
     );
   } else {
@@ -42,6 +45,9 @@ const App = () => {
       <Switch>
         <Route path="/" exact>
           <HomePage />
+        </Route>
+        <Route path="/product/:productId" exact>
+          <ProductDetailsPage />
         </Route>
         <Redirect to="/" />
       </Switch>

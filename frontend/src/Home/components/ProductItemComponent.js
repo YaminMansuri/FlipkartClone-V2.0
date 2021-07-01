@@ -41,30 +41,36 @@ const ProductItemComponent = (props) => {
 
   return (
     <div className={productItemStyles.productItem}>
-      <Link to={`/product/${product._id}`} className={productItemStyles.link}>
-        <img
-          src={product.smallImage}
-          alt={product.name}
-          className={`${productItemStyles.productImage}
+      {product && (
+        <Link to={`/product/${product._id}`} className={productItemStyles.link}>
+          <img
+            src={product.smallImage}
+            alt={product.name}
+            className={`${productItemStyles.productImage}
             ${utilClasses.marginAuto}
             ${utilClasses.displayFlex}`}
-        />
+          />
 
-        <Typography color="textSecondary" className={utilClasses.spacing}>
-          {product.companyName}
-        </Typography>
+          <Typography color="textSecondary" className={utilClasses.spacing}>
+            {product.companyName}
+          </Typography>
 
-        <ProductTitleComponent title={product.name} wrap={true} variant="body1" />
-        <RatingsComponent
-          ratings={product.ratings}
-          numOfRatings={product.numOfRatings}
-        />
-        <PriceComponent
-          price={product.price}
-          discount={product.discount}
-          variant="body1"
-        />
-      </Link>
+          <ProductTitleComponent
+            title={product.name}
+            wrap={true}
+            variant="body1"
+          />
+          <RatingsComponent
+            ratings={product.ratings}
+            numOfRatings={product.numOfRatings}
+          />
+          <PriceComponent
+            price={product.price}
+            discount={product.discount}
+            variant="body1"
+          />
+        </Link>
+      )}
     </div>
   );
 };

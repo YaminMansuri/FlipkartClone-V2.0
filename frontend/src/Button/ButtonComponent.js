@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ButtonComponent = (props) => {
-  const { color, margin, icon } = props;
+  const { color, margin, icon, onClick } = props;
   const buttonStyles = useStyles();
   const utilClasses = utilityClasses();
 
@@ -22,6 +22,7 @@ const ButtonComponent = (props) => {
       variant="contained"
       className={`${buttonStyles.btn} ${utilClasses.flexOne} ${color} ${margin}`}
       startIcon={icon}
+      onClick={onClick}
     >
       {props.children}
     </Button>
