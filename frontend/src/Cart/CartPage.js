@@ -1,11 +1,30 @@
 import React from "react";
-import { useSelector } from "react-redux";
+
+import { makeStyles } from "@material-ui/core";
+
+import CartListComponent from "./CartListComponent";
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  container: {
+    marginTop: theme.spacing(2),
+    margin: "auto",
+    [theme.breakpoints.up("md")]: {
+      width: "70%",
+    },
+  },
+}));
 
 const CartPage = () => {
-  const cart = useSelector((state) => state.cartReducer.cartItems);
+  const classes = useStyles();
 
-  console.log(cart);
-  return <div>Cart Page</div>;
+  return (
+    <div className={classes.root}>
+      <div className={classes.container}>
+        <CartListComponent />
+      </div>
+    </div>
+  );
 };
 
 export default CartPage;

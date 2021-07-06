@@ -1,17 +1,21 @@
 import React from "react";
 
-import { Typography } from "@material-ui/core";
+import { Typography, makeStyles } from "@material-ui/core";
 
-import utilityClasses from "../util/utilityClasses";
+const useStyles = makeStyles((theme) => ({
+  titleStyle: {
+    marginBottom: theme.spacing(0.7),
+  },
+}));
 
 const ProductTitleComponent = (props) => {
   const { title, variant, wrap } = props;
-  const utilClasses = utilityClasses();
+  const classes = useStyles();
 
   return (
     <Typography
       className={`
-        ${utilClasses.spacing} 
+        ${classes.titleStyle} 
       `}
       variant={variant}
       noWrap={wrap}

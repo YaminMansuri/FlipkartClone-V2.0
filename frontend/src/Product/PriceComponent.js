@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PriceComponent = (props) => {
-  const { price, discount, variant } = props;
+  const { price, discount, variant, margin } = props;
   const priceStyles = useStyles();
   const utilClasses = utilityClasses();
 
@@ -21,7 +21,7 @@ const PriceComponent = (props) => {
   };
 
   return (
-    <Typography className={utilClasses.spacing} noWrap>
+    <Typography className={`${utilClasses.spacing} ${margin}`} noWrap>
       <Typography
         component="span"
         color="textPrimary"

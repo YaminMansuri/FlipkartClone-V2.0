@@ -42,4 +42,11 @@ export default makeStyles((theme) => ({
       display: "none",
     },
   },
+  linkStyle: {
+    textDecoration: "none",
+    color: "black",
+    "&:hover": {
+      color: theme.palette.primary.main,
+    },
+  },
 }));

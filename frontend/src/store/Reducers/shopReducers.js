@@ -1,5 +1,7 @@
 import { updateState } from "../util/utilityFunctions";
 import {
+  GET_CART_DATA_FAILURE,
+  GET_CART_DATA_SUCCESS,
   POST_ADD_TO_CART_FAILURE,
   POST_ADD_TO_CART_SUCCESS,
 } from "../Constants/actionTypes";
@@ -12,10 +14,15 @@ const initialState = {
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case POST_ADD_TO_CART_SUCCESS:
-      console.log(action.payload);
       return updateState(state, { cartItems: action.payload, error: "" });
     case POST_ADD_TO_CART_FAILURE:
       return updateState(state, { error: action.payload });
+
+    case GET_CART_DATA_SUCCESS:
+      return updateState(state, { cartItems: action.payload, error: "" });
+    case GET_CART_DATA_FAILURE:
+      return updateState(state, { error: action.payload });
+
     default:
       return state;
   }
