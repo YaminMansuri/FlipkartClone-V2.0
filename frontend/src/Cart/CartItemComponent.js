@@ -12,25 +12,22 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2.5),
   },
-  imageContainerStye: {
+  rightSpacing: {
     marginRight: theme.spacing(2.5),
+  },
+  imageContainerStyle: {
+    marginTop: theme.spacing(2.5),
   },
   imageStyle: {
     marginBottom: theme.spacing(2.5),
     maxWidth: "100%",
     maxHeight: "100%",
   },
-  flexColumn: {
-    flexDirection: "column",
-  },
   sellerStyle: {
     margin: theme.spacing(1.5, 0),
   },
   priceComponentStyle: {
     margin: theme.spacing(2, 0),
-  },
-  justifyEnd: {
-    justifyContent: "end",
   },
 }));
 
@@ -43,25 +40,35 @@ const CartItemComponent = (props) => {
       <div className={`${classes.root} ${utilClasses.displayFlex}`}>
         <div
           className={`
-            ${classes.imageContainerStye} 
+            ${classes.rightSpacing} 
             ${utilClasses.displayFlex}
-            ${classes.flexColumn}
+            ${utilClasses.flexColumn}
           `}
         >
-          <img
-            src={product.smallImage}
-            alt={product.name}
-            className={`
+          <div className={classes.imageContainerStyle}>
+            <img
+              src={product.smallImage}
+              alt={product.name}
+              className={`
               ${classes.imageStyle} 
-              ${utilClasses.displayFlex}  
+              ${utilClasses.displayFlex}
               ${utilClasses.marginAuto}
             `}
-          />
-          <div>
+            />
+          </div>
+          <div
+            className={`
+              ${utilClasses.displayFlex}
+              ${utilClasses.flexColumn}
+              ${utilClasses.justifyEnd}
+              ${utilClasses.marginAuto}
+              ${utilClasses.flexOne}
+            `}
+          >
             <CounterComponent quantity={quantity} />
           </div>
         </div>
-        <div className={`${utilClasses.displayFlex} ${classes.flexColumn}`}>
+        <div className={`${utilClasses.displayFlex} ${utilClasses.flexColumn}`}>
           <div className={utilClasses.flexOne}>
             <Link
               to={`/product/${product._id}`}
@@ -89,7 +96,7 @@ const CartItemComponent = (props) => {
           className={`
             ${utilClasses.displayFlex} 
             ${utilClasses.flexOne} 
-            ${classes.justifyEnd}
+            ${utilClasses.justifyEnd}
           `}
         >
           <Typography>

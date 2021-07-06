@@ -10,6 +10,9 @@ export default makeStyles((theme) => ({
   flexTwo: {
     flex: 2,
   },
+  flexColumn: {
+    flexDirection: "column",
+  },
   spacing: {
     margin: theme.spacing(0.7, 0),
   },
@@ -27,6 +30,9 @@ export default makeStyles((theme) => ({
   },
   justifyBetween: {
     justifyContent: "space-between",
+  },
+  justifyEnd: {
+    justifyContent: "flex-end",
   },
   desktopView: {
     display: "none",
