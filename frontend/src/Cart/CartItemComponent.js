@@ -107,7 +107,7 @@ const CartItemComponent = (props) => {
             </Typography>
             <Typography
               component="span"
-              style={{ textDecoration: "line-through" }}
+              className={utilClasses.strikeThroughText}
             >
               {" "}
               ₹40

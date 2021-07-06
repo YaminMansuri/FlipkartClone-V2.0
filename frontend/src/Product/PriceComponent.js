@@ -7,7 +7,6 @@ import utilityClasses from "../util/utilityClasses";
 const useStyles = makeStyles((theme) => ({
   productPrice: {
     margin: 5,
-    textDecoration: "line-through",
   },
 }));
 
@@ -33,7 +32,7 @@ const PriceComponent = (props) => {
       <Typography
         component="span"
         color="textSecondary"
-        className={priceStyles.productPrice}
+        className={`${priceStyles.productPrice} ${utilClasses.strikeThroughText}`}
       >
         ₹{price}
       </Typography>
