@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CounterComponent = (props) => {
-  const { quantity } = props;
+  const { quantity, className } = props;
   const classes = useStyles();
   return (
-    <div>
+    <div className={className}>
       <IconButton className={classes.iconBtn} size="small">
         <Remove fontSize="small" />
       </IconButton>

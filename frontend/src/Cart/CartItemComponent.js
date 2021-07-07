@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Divider, Button, makeStyles, Typography } from "@material-ui/core";
+import {
+  Grid,
+  Divider,
+  Button,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 
 import ProductTitleComonent from "../Product/ProductTitleComponent";
 import PriceComponent from "../Product/PriceComponent";
@@ -10,24 +16,42 @@ import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(2.5, 0),
   },
   rightSpacing: {
     marginRight: theme.spacing(2.5),
   },
   imageContainerStyle: {
-    marginTop: theme.spacing(2.5),
+    marginTop: theme.spacing(1),
   },
   imageStyle: {
     marginBottom: theme.spacing(2.5),
-    maxWidth: "100%",
-    maxHeight: "100%",
+    maxHeight: "95%",
+    maxWidth: "95%",
+    [theme.breakpoints.up("md")]: {
+      maxHeight: "100%",
+      maxWidth: "100%",
+    },
   },
   sellerStyle: {
     margin: theme.spacing(1.5, 0),
   },
   priceComponentStyle: {
     margin: theme.spacing(2, 0),
+  },
+  counterComponentStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  fullHeight: {
+    height: "100%",
+  },
+  btnStyle: {
+    textTransform: "none",
+    fontSize: "0.95rem",
+    [theme.breakpoints.up("md")]: {
+      textTransform: "upperCase",
+    },
   },
 }));
 
@@ -37,70 +61,88 @@ const CartItemComponent = (props) => {
   const utilClasses = utilityClasses();
   return (
     <>
-      <div className={`${classes.root} ${utilClasses.displayFlex}`}>
-        <div
-          className={`
-            ${classes.rightSpacing} 
-            ${utilClasses.displayFlex}
-            ${utilClasses.flexColumn}
-          `}
-        >
-          <div className={classes.imageContainerStyle}>
-            <img
-              src={product.smallImage}
-              alt={product.name}
+      <Grid
+        container
+        spacing={1}
+        className={`${classes.root} ${utilClasses.displayFlex}`}
+      >
+        <Grid item xs={5} md={2}>
+          <Grid container className={classes.fullHeight}>
+            <Grid item xs={12}>
+              <div className={classes.imageContainerStyle}>
+                <img
+                  src={product.smallImage}
+                  alt={product.name}
+                  className={`
+                    ${classes.imageStyle} 
+                    ${utilClasses.displayFlex}
+                    ${utilClasses.marginAuto}
+                  `}
+                />
+              </div>
+            </Grid>
+            <Grid
+              item
+              xs={12}
               className={`
-              ${classes.imageStyle} 
-              ${utilClasses.displayFlex}
-              ${utilClasses.marginAuto}
-            `}
-            />
-          </div>
-          <div
-            className={`
-              ${utilClasses.displayFlex}
-              ${utilClasses.flexColumn}
-              ${utilClasses.justifyEnd}
-              ${utilClasses.marginAuto}
-              ${utilClasses.flexOne}
-            `}
-          >
-            <CounterComponent quantity={quantity} />
-          </div>
-        </div>
-        <div className={`${utilClasses.displayFlex} ${utilClasses.flexColumn}`}>
-          <div className={utilClasses.flexOne}>
-            <Link
-              to={`/product/${product._id}`}
-              className={utilClasses.linkStyle}
+                ${utilClasses.displayFlex} 
+                ${utilClasses.flexColumn} 
+                ${utilClasses.justifyEnd}
+              `}
             >
-              <ProductTitleComonent title={product.name} />
-            </Link>
-            <Typography color="textSecondary">{product.subTitle}</Typography>
-            <Typography color="textSecondary" className={classes.sellerStyle}>
-              Seller:{product.seller}
-            </Typography>
-            <PriceComponent
-              price={product.price}
-              discount={product.discount}
-              margin={classes.priceComponentStyle}
-              variant="h6"
-            />
-          </div>
+              <CounterComponent
+                quantity={quantity}
+                className={`
+                  ${utilClasses.displayFlex}
+                  ${classes.counterComponentStyle}
+                `}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={7} md={7}>
+          <Grid container className={classes.fullHeight}>
+            <Grid item xs={12} className={utilClasses.flexOne}>
+              <Link
+                to={`/product/${product._id}`}
+                className={utilClasses.linkStyle}
+              >
+                <ProductTitleComonent title={product.name} wrap="true" />
+              </Link>
+              <Typography color="textSecondary">{product.subTitle}</Typography>
+              <Typography
+                color="textSecondary"
+                className={`${classes.sellerStyle}`}
+                noWrap="false"
+              >
+                Seller:{product.seller}
+              </Typography>
+              <PriceComponent
+                price={product.price}
+                discount={product.discount}
+                margin={classes.priceComponentStyle}
+                variant="h6"
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              className={`
+                ${utilClasses.displayFlex} 
+                ${utilClasses.flexColumn} 
+                ${utilClasses.justifyEnd}
+              `}
+            >
+              <div>
+                <Button className={classes.btnStyle}>Save for later</Button>
+                <Button className={classes.btnStyle}>Delete</Button>
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item md={3} className={utilClasses.desktopView}>
           <div>
-            <Button>Save for Later</Button>
-            <Button>Remove</Button>
-          </div>
-        </div>
-        <div
-          className={`
-            ${utilClasses.displayFlex} 
-            ${utilClasses.flexOne} 
-            ${utilClasses.justifyEnd}
-          `}
-        >
-          <Typography>
-            Delivery in 2 days, Thu |
+            <Typography component="span">Delivery in 2 days, Thu |</Typography>
             <Typography component="span" color="secondary">
               {" "}
               Free
@@ -112,9 +154,9 @@ const CartItemComponent = (props) => {
               {" "}
               ₹40
             </Typography>
-          </Typography>
-        </div>
-      </div>
+          </div>
+        </Grid>
+      </Grid>
 
       <Divider />
     </>
