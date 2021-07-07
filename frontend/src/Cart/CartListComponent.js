@@ -14,6 +14,7 @@ import {
 import { AuthContext } from "../shared/context/AuthContext";
 import { getCartDataAction } from "../store/Actions/shopActions";
 import CartItemComponent from "./CartItemComponent";
+import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   cardStyle: {
@@ -33,6 +34,7 @@ const CartListComponent = () => {
   const dispatch = useDispatch();
 
   const classes = useStyles();
+  const utilClasses = utilityClasses();
 
   useEffect(() => {
     dispatch(getCartDataAction(userId));
@@ -58,7 +60,10 @@ const CartListComponent = () => {
             ))}
           </CardContent>
           <CardActions>
-            <Button variant="contained" className={classes.btnStyle}>
+            <Button
+              variant="contained"
+              className={`${classes.btnStyle} ${utilClasses.orange}`}
+            >
               Place Order
             </Button>
           </CardActions>

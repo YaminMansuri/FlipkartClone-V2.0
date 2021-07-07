@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: "100%",
       maxWidth: "100%",
     },
-    backgroundColor: "teal",
   },
 }));
 

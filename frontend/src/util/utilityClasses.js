@@ -58,4 +58,16 @@ export default makeStyles((theme) => ({
   strikeThroughText: {
     textDecoration: "line-through",
   },
+  yellow: {
+    backgroundColor: theme.palette.yellow.main,
+    "&:hover": {
+      backgroundColor: "#ffb339",
+    },
+  },
+  orange: {
+    backgroundColor: theme.palette.orange.main,
+    "&:hover": {
+      backgroundColor: "#ff7936",
+    },
+  },
 }));
