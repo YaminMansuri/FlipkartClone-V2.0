@@ -25,7 +25,7 @@ const pushCartItem = (updatedCartItems, productId) => {
 
 export const addToCart = async (req, res) => {
   try {
-    const { userId, productId } = req.body;
+    const { userId, productId, value } = req.body;
 
     const user = await UserModel.findById(userId);
 
