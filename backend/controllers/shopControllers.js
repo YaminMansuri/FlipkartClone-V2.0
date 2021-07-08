@@ -35,8 +35,8 @@ export const addToCart = async (req, res) => {
 
     user.cart = updatedCart;
     await user.save();
-    const cartItems = user.cart;
-    res.json({ cartItems });
+    const { cart } = await user.populate("cart.items.product").execPopulate();
+    res.json({ cartItems: cart });
   } catch (error) {
     console.log("Error!!!", error);
     res.status(400).json({ error });

@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { IconButton, TextField, makeStyles } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
+
+import { AuthContext } from "../shared/context/AuthContext";
+import {
+  addToCartAction,
+} from "../store/Actions/shopActions";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   iconBtn: {
@@ -22,8 +28,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CounterComponent = (props) => {
-  const { quantity, className } = props;
+  const { quantity, productId, className } = props;
   const classes = useStyles();
+  const { userId } = useContext(AuthContext);
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(addToCartAction(userId, productId));
+  };
+
   return (
     <div className={className}>
       <IconButton className={classes.iconBtn} size="small">
@@ -36,7 +49,11 @@ const CounterComponent = (props) => {
         value={quantity}
         className={classes.textFieldStyle}
       />
-      <IconButton className={classes.iconBtn} size="small">
+      <IconButton
+        className={classes.iconBtn}
+        size="small"
+        onClick={addToCartHandler}
+      >
         <Add fontSize="small" />
       </IconButton>
     </div>

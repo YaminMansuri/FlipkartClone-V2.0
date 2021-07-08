@@ -92,6 +92,7 @@ const CartItemComponent = (props) => {
             >
               <CounterComponent
                 quantity={quantity}
+                productId={product._id}
                 className={`
                   ${utilClasses.displayFlex}
                   ${classes.counterComponentStyle}
