@@ -7,9 +7,9 @@ import {
 } from "../Constants/actionTypes";
 import { dispatchAction } from "../util/utilityFunctions";
 
-export const addToCartAction = (userId, productId) => async (dispatch) => {
+export const addToCartAction = (userId, productId, value) => async (dispatch) => {
   try {
-    const { data } = await Api.addToCart(userId, productId);
+    const { data } = await Api.addToCart(userId, productId, value);
     console.log("action", data.cartItems);
     dispatch(dispatchAction(POST_ADD_TO_CART_SUCCESS, data.cartItems));
   } catch (error) {

@@ -1,7 +1,19 @@
 import UserModel from "../models/UserModel.js";
 
-const incrementQuantity = (updatedCartItems, index, oldCartItems) => {
-  return (updatedCartItems[index].quantity = ++oldCartItems[index].quantity);
+const findCartProductIndex = (oldCartItems, productId) => {
+  return oldCartItems.findIndex((cartProduct) => {
+    if (!cartProduct.product) return -1;
+    return cartProduct.product.toString() === productId.toString();
+  });
+};
+
+const incrementQuantity = (updatedCartItems, index, oldCartItems, value) => {
+  if (value)
+    return (updatedCartItems[index].quantity =
+      oldCartItems[index].quantity + value);
+  else
+    return (updatedCartItems[index].quantity =
+      oldCartItems[index].quantity + 1);
 };
 
 const pushCartItem = (updatedCartItems, productId) => {
@@ -18,15 +30,16 @@ export const addToCart = async (req, res) => {
     const user = await UserModel.findById(userId);
 
     const oldCartItems = user.cart.items;
-
-    const cartProductIndex = oldCartItems.findIndex((cartProduct) => {
-      if (!cartProduct.product) return -1;
-      return cartProduct.product.toString() === productId.toString();
-    });
     const updatedCartItems = [...oldCartItems];
-
+    
+    const cartProductIndex = findCartProductIndex(oldCartItems, productId);
     cartProductIndex >= 0
-      ? incrementQuantity(updatedCartItems, cartProductIndex, oldCartItems)
+      ? incrementQuantity(
+          updatedCartItems,
+          cartProductIndex,
+          oldCartItems,
+          value
+        )
       : pushCartItem(updatedCartItems, productId);
 
     const updatedCart = {

@@ -4,9 +4,7 @@ import { IconButton, TextField, makeStyles } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
 
 import { AuthContext } from "../shared/context/AuthContext";
-import {
-  addToCartAction,
-} from "../store/Actions/shopActions";
+import { addToCartAction } from "../store/Actions/shopActions";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,13 +31,21 @@ const CounterComponent = (props) => {
   const { userId } = useContext(AuthContext);
   const dispatch = useDispatch();
 
-  const addToCartHandler = () => {
-    dispatch(addToCartAction(userId, productId));
+  const incrementQuantityHandler = () => {
+    dispatch(addToCartAction(userId, productId, 1));
+  };
+
+  const decrementQuantityHandler = () => {
+    dispatch(addToCartAction(userId, productId, -1));
   };
 
   return (
     <div className={className}>
-      <IconButton className={classes.iconBtn} size="small">
+      <IconButton
+        className={classes.iconBtn}
+        size="small"
+        onClick={decrementQuantityHandler}
+      >
         <Remove fontSize="small" />
       </IconButton>
       <TextField
@@ -52,7 +58,7 @@ const CounterComponent = (props) => {
       <IconButton
         className={classes.iconBtn}
         size="small"
-        onClick={addToCartHandler}
+        onClick={incrementQuantityHandler}
       >
         <Add fontSize="small" />
       </IconButton>
