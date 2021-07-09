@@ -16,7 +16,7 @@ import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(2.5, 0.5),
   },
   rightSpacing: {
     marginRight: theme.spacing(2.5),
@@ -61,7 +61,7 @@ const CartItemComponent = (props) => {
   const utilClasses = utilityClasses();
   return (
     <>
-      <Grid container spacing={1} className={classes.root}>
+      <Grid container spacing={1} className={`${classes.root} `}>
         <Grid item xs={5} md={2}>
           <Grid container className={classes.fullHeight}>
             <Grid item xs={12}>
