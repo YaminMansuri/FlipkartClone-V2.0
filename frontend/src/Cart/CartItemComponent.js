@@ -61,7 +61,7 @@ const CartItemComponent = (props) => {
   const utilClasses = utilityClasses();
   return (
     <>
-      <Grid container spacing={1} className={`${classes.root} `}>
+      <Grid container spacing={1} className={classes.root}>
         <Grid item xs={5} md={2}>
           <Grid container className={classes.fullHeight}>
             <Grid item xs={12}>
