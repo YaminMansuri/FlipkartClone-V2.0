@@ -1,17 +1,20 @@
 import React from "react";
 
-import { makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 
 import CartListComponent from "./CartListComponent";
+import PriceDetailsComponent from "./PriceDetailsComponent";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   container: {
-    marginTop: theme.spacing(2),
-    margin: "auto",
+    margin: theme.spacing(2, "auto"),
     [theme.breakpoints.up("md")]: {
-      width: "70%",
+      width: "85%",
     },
+    overflow: "hidden",
+  },
+  cardStyle: {
+    boxShadow: theme.shadows[1],
   },
 }));
 
@@ -19,11 +22,18 @@ const CartPage = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.container}>
-        <CartListComponent />
-      </div>
-    </div>
+    <Grid container className={classes.container}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8}>
+          <CartListComponent />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <div>
+            <PriceDetailsComponent />
+          </div>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

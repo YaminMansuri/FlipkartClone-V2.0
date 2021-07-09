@@ -11,7 +11,6 @@ const CategoryListComponent = () => {
     dispatch(getCategoriesAction());
   }, [dispatch]);
 
-  // const categories = useSelector((state) => state.productsReducer.categories);
   const categories = useSelector((state) => state.categoriesReducer.categories);
 
   return (

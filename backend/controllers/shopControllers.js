@@ -7,7 +7,7 @@ const findCartProductIndex = (oldCartItems, productId) => {
   });
 };
 
-const incrementQuantity = (updatedCartItems, index, oldCartItems, value) => {
+const quantityChangeHandler = (updatedCartItems, index, oldCartItems, value) => {
   if (value)
     return (updatedCartItems[index].quantity =
       oldCartItems[index].quantity + value);
@@ -31,10 +31,10 @@ export const addToCart = async (req, res) => {
 
     const oldCartItems = user.cart.items;
     const updatedCartItems = [...oldCartItems];
-    
+
     const cartProductIndex = findCartProductIndex(oldCartItems, productId);
     cartProductIndex >= 0
-      ? incrementQuantity(
+      ? quantityChangeHandler(
           updatedCartItems,
           cartProductIndex,
           oldCartItems,

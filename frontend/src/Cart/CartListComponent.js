@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     marginLeft: "auto",
     borderRadius: "0",
-    padding: theme.spacing(1.8, 10),
+    padding: theme.spacing(1, 4.5),
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(1.8, 10),
+    },
   },
 }));
 
@@ -59,6 +62,7 @@ const CartListComponent = () => {
               />
             ))}
           </CardContent>
+          
           <CardActions>
             <Button
               variant="contained"

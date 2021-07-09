@@ -16,7 +16,7 @@ import utilityClasses from "../util/utilityClasses";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2.5, 0),
+    padding: theme.spacing(2.5),
   },
   rightSpacing: {
     marginRight: theme.spacing(2.5),
@@ -61,11 +61,7 @@ const CartItemComponent = (props) => {
   const utilClasses = utilityClasses();
   return (
     <>
-      <Grid
-        container
-        spacing={1}
-        className={`${classes.root} ${utilClasses.displayFlex}`}
-      >
+      <Grid container spacing={1} className={classes.root}>
         <Grid item xs={5} md={2}>
           <Grid container className={classes.fullHeight}>
             <Grid item xs={12}>
@@ -74,7 +70,7 @@ const CartItemComponent = (props) => {
                   src={product.smallImage}
                   alt={product.name}
                   className={`
-                    ${classes.imageStyle} 
+                    ${classes.imageStyle}
                     ${utilClasses.displayFlex}
                     ${utilClasses.marginAuto}
                   `}
@@ -101,9 +97,9 @@ const CartItemComponent = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={7} md={7}>
+        <Grid item xs={7} md={6}>
           <Grid container className={classes.fullHeight}>
-            <Grid item xs={12} className={utilClasses.flexOne}>
+            <Grid item xs={12}>
               <Link
                 to={`/product/${product._id}`}
                 className={utilClasses.linkStyle}
@@ -141,7 +137,15 @@ const CartItemComponent = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item md={3} className={utilClasses.desktopView}>
+        <Grid
+          item
+          md={4}
+          className={`
+            ${utilClasses.desktopView} 
+            ${utilClasses.displayFlex} 
+            ${utilClasses.justifyEnd}
+          `}
+        >
           <div>
             <Typography component="span">Delivery in 2 days, Thu |</Typography>
             <Typography component="span" color="secondary">
