@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { makeStyles, SwipeableDrawer, Typography } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 
 import ListComponent from "./ListComponent";
 import utilityClasses from "../util/utilityClasses";
+import { AuthContext } from "../shared/context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   drawerHeader: {
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 const SideDrawerComponent = (props) => {
   const { open, toggleDrawer } = props;
+  const { name } = useContext(AuthContext);
+
   const sideDrawerStyles = useStyles();
   const utilClasses = utilityClasses();
 
@@ -40,7 +43,7 @@ const SideDrawerComponent = (props) => {
             ${utilClasses.displayFlex}`}
         >
           <Person className={sideDrawerStyles.personIcon} />
-          <Typography>Yamin Mansuri</Typography>
+          <Typography>{name}</Typography>
         </div>
 
         <ListComponent />
