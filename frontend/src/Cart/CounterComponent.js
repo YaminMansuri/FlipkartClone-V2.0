@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
+import { useDispatch } from "react-redux";
 
 import { IconButton, TextField, makeStyles } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
 
 import { AuthContext } from "../shared/context/AuthContext";
-import { addToCartAction } from "../store/Actions/shopActions";
-import { useDispatch } from "react-redux";
+import {
+  addToCartAction,
+  deleteCartItemAction,
+} from "../store/Actions/shopActions";
 
 const useStyles = makeStyles((theme) => ({
   iconBtn: {
@@ -32,11 +35,15 @@ const CounterComponent = (props) => {
   const dispatch = useDispatch();
 
   const incrementQuantityHandler = () => {
-    dispatch(addToCartAction(userId, productId, 1));
+    quantity >= 5
+      ? console.log("Quantity cannot be greater that 5")
+      : dispatch(addToCartAction(userId, productId, 1));
   };
 
   const decrementQuantityHandler = () => {
-    dispatch(addToCartAction(userId, productId, -1));
+    quantity > 1
+      ? dispatch(addToCartAction(userId, productId, -1))
+      : dispatch(deleteCartItemAction(userId, productId));
   };
 
   return (

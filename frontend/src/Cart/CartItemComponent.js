@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -13,6 +13,9 @@ import ProductTitleComonent from "../Product/ProductTitleComponent";
 import PriceComponent from "../Product/PriceComponent";
 import CounterComponent from "./CounterComponent";
 import utilityClasses from "../util/utilityClasses";
+import { AuthContext } from "../shared/context/AuthContext";
+import { useDispatch } from "react-redux";
+import { deleteCartItemAction } from "../store/Actions/shopActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +62,14 @@ const CartItemComponent = (props) => {
   const { product, quantity } = props;
   const classes = useStyles();
   const utilClasses = utilityClasses();
+
+  const { userId } = useContext(AuthContext);
+  const dispatch = useDispatch();
+
+  const deleteCartItemHandler = () => {
+    dispatch(deleteCartItemAction(userId, product._id));
+  };
+
   return (
     <>
       <Grid container spacing={1} className={classes.root}>
@@ -132,7 +143,12 @@ const CartItemComponent = (props) => {
             >
               <div>
                 <Button className={classes.btnStyle}>Save for later</Button>
-                <Button className={classes.btnStyle}>Delete</Button>
+                <Button
+                  className={classes.btnStyle}
+                  onClick={deleteCartItemHandler}
+                >
+                  Delete
+                </Button>
               </div>
             </Grid>
           </Grid>
