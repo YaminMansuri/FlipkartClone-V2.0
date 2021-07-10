@@ -36,7 +36,7 @@ const CounterComponent = (props) => {
 
   const incrementQuantityHandler = () => {
     quantity >= 5
-      ? console.log("Quantity cannot be greater that 5")
+      ? console.log("We're sorry! Only 5 units allowed in each order")
       : dispatch(addToCartAction(userId, productId, 1));
   };
 

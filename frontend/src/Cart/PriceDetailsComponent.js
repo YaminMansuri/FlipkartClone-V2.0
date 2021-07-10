@@ -84,7 +84,9 @@ const PriceDetailsComponent = () => {
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={6}>
-                <Typography>Total Amount</Typography>
+                <Typography className={utilClasses.bold}>
+                  Total Amount
+                </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography
@@ -101,7 +103,7 @@ const PriceDetailsComponent = () => {
           </CardContent>
           <Divider variant="middle" />
           <CardContent>
-            <Typography color="secondary">
+            <Typography color="secondary" className={utilClasses.semiBold}>
               You will save ₹{totalDiscount} on this order
             </Typography>
           </CardContent>
