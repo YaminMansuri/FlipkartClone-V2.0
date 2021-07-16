@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -14,6 +15,19 @@ const UserSchema = new Schema({
     required: true,
   },
   cart: {
+    items: [
+      {
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: "products",
+        },
+        quantity: {
+          type: Number,
+        },
+      },
+    ],
+  },
+  orders: {
     items: [
       {
         product: {

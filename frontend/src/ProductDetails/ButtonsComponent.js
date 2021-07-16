@@ -4,8 +4,11 @@ import { ShoppingCart, FlashOn } from "@material-ui/icons";
 
 import ButtonComponent from "../Button/ButtonComponent";
 import { AuthContext } from "../shared/context/AuthContext";
-import { useParams } from "react-router-dom";
-import { addToCartAction } from "../store/Actions/shopActions";
+import { useHistory, useParams } from "react-router-dom";
+import {
+  addToCartAction,
+  placeOrderAction,
+} from "../store/Actions/shopActions";
 import utilityClasses from "../util/utilityClasses";
 
 const ButtonsComponent = (props) => {
@@ -16,9 +19,15 @@ const ButtonsComponent = (props) => {
   const utilClasses = utilityClasses();
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const addToCartHandler = () => {
     dispatch(addToCartAction(userId, productId));
+  };
+
+  const buyNowHandler = () => {
+    dispatch(placeOrderAction(userId, productId));
+    history.push(`/order`);
   };
 
   return (
@@ -35,6 +44,7 @@ const ButtonsComponent = (props) => {
         color={utilClasses.orange}
         margin={btnMargin}
         icon={<FlashOn />}
+        onClick={buyNowHandler}
       >
         Buy Now
       </ButtonComponent>

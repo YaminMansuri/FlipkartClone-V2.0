@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import {
   Grid,
@@ -22,18 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PriceDetailsComponent = () => {
+const PriceDetailsComponent = (props) => {
+  const { productArray } = props;
   const classes = useStyles();
   const utilClasses = utilityClasses();
-
-  const cart = useSelector((state) => state.cartReducer.cartItems);
-  console.log("Price", cart.items);
 
   let totalPrice = 0;
   let totalDiscount = 0;
 
-  cart.items &&
-    cart.items.forEach((cartItem) => {
+  productArray &&
+    productArray.forEach((cartItem) => {
       const { product, quantity } = cartItem;
       const { price, discount } = product;
       totalPrice += price * quantity;
@@ -42,14 +39,14 @@ const PriceDetailsComponent = () => {
 
   return (
     <>
-      {cart.items && (
+      {productArray && (
         <Card className={classes.cardStyle}>
           <CardHeader className={classes.headerStyle} title="Price Details" />
           <Divider />
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={6}>
-                <Typography>Price ({cart.items.length} items)</Typography>
+                <Typography>Price ({productArray.length} items)</Typography>
               </Grid>
               <Grid
                 item

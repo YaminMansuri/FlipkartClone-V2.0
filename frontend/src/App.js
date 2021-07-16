@@ -6,6 +6,7 @@ import NavBarComponent from "./Navigation/NavBarComponent";
 import ProductDetailsPage from "./ProductDetails/ProductDetailsPage";
 import CartPage from "./Cart/CartPage";
 import { AuthContext } from "./shared/context/AuthContext";
+import OrderPage from "./Order/OrderPage";
 
 const App = () => {
   const [token, setToken] = useState(false);
@@ -37,6 +38,9 @@ const App = () => {
         </Route>
         <Route path="/cart" exact>
           <CartPage />
+        </Route>
+        <Route path="/order" exact>
+          <OrderPage />
         </Route>
       </Switch>
     );

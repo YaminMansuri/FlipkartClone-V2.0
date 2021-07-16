@@ -1,20 +1,24 @@
 import React from "react";
 
 import {
+  Button,
   Card,
-  CardHeader,
   CardActions,
   CardContent,
+  CardHeader,
   Divider,
-  Button,
   makeStyles,
 } from "@material-ui/core";
 
-import CartItemComponent from "./CartItemComponent";
 import utilityClasses from "../util/utilityClasses";
-import { useHistory } from "react-router-dom";
+import OrderItemComponent from "./OrderItemComponent";
 
 const useStyles = makeStyles((theme) => ({
+  headerStyle: {
+    backgroundColor: theme.palette.primary.main,
+    color: "white",
+    height: 50,
+  },
   cardStyle: {
     boxShadow: theme.shadows[1],
   },
@@ -30,30 +34,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CartListComponent = (props) => {
-  const { items } = props;
-  const classes = useStyles();
+const OrderListComponent = (props) => {
+  const { items, title, headerStyle } = props;
   const utilClasses = utilityClasses();
+  const classes = useStyles();
 
-  const history = useHistory();
-
-  const buyNowHandler = () => {
-    history.push("/order");
-  };
+  const buyNowHandler = () => {};
 
   return (
-    <Card className={classes.cardStyle}>
-      {items && (
+    <Card>
+      <Card className={classes.cardStyle}>
         <>
-          <CardHeader title={`My Cart (${items.length})`} />
+          <CardHeader title={title} className={headerStyle} />
 
           <Divider />
 
           <CardContent>
-            {items.map((cartItem) => (
-              <CartItemComponent
-                product={cartItem.product}
-                quantity={cartItem.quantity}
+            {items.map((orderItem) => (
+              <OrderItemComponent
+                product={orderItem.product}
+                quantity={orderItem.quantity}
               />
             ))}
           </CardContent>
@@ -68,9 +68,9 @@ const CartListComponent = (props) => {
             </Button>
           </CardActions>
         </>
-      )}
+      </Card>
     </Card>
   );
 };
 
-export default CartListComponent;
+export default OrderListComponent;
