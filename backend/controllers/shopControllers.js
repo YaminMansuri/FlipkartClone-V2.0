@@ -1,43 +1,53 @@
 import UserModel from "../models/UserModel.js";
 
-const findIndex = (oldCartItems, productId) => {
-  return oldCartItems.findIndex((cartProduct) => {
-    if (!cartProduct.product) return -1;
-    return cartProduct.product.toString() === productId.toString();
+const findItemIndex = (oldItems, productId) => {
+  return oldItems.findIndex((oldItem) => {
+    if (!oldItem.product) return -1;
+    return oldItem.product.toString() === productId.toString();
   });
 };
 
-const quantityChangeHandler = (
-  updatedCartItems,
-  index,
-  oldCartItems,
-  value
-) => {
-  if (value)
-    return (updatedCartItems[index].quantity =
-      oldCartItems[index].quantity + value);
-  else
-    return (updatedCartItems[index].quantity =
-      oldCartItems[index].quantity + 1);
+const quantityChangeHandler = (updatedItems, index, oldItems, value = 1) => {
+  return (updatedItems[index].quantity = oldItems[index].quantity + value);
 };
 
-const pushCartItem = (updatedCartItems, productId) => {
-  return updatedCartItems.push({
-    product: productId,
-    quantity: 1,
-  });
+const addItem = (updatedItems, productId, type) => {
+  if (type === "push")
+    return updatedItems.push({
+      product: productId,
+      quantity: 1,
+    });
+  else if (type === "set")
+    return (updatedItems[0] = {
+      product: productId,
+      quantity: 1,
+    });
+};
+
+const deleteItem = (oldItems, productId) => {
+  return oldItems.filter(
+    (oldItem) => oldItem.product.toString() !== productId.toString()
+  );
+};
+
+const updateItems = (updatedItems) => {
+  return { items: updatedItems };
+};
+
+const findUser = async (data) => {
+  const { userId, productId, value } = data;
+  const user = await UserModel.findById(userId);
+  return { user, productId, value };
 };
 
 export const addToCart = async (req, res) => {
   try {
-    const { userId, productId, value } = req.body;
-
-    const user = await UserModel.findById(userId);
+    const { user, productId, value } = await findUser(req.body);
 
     const oldCartItems = user.cart.items;
     const updatedCartItems = [...oldCartItems];
 
-    const cartProductIndex = findIndex(oldCartItems, productId);
+    const cartProductIndex = findItemIndex(oldCartItems, productId);
     cartProductIndex >= 0
       ? quantityChangeHandler(
           updatedCartItems,
@@ -45,11 +55,9 @@ export const addToCart = async (req, res) => {
           oldCartItems,
           value
         )
-      : pushCartItem(updatedCartItems, productId);
+      : addItem(updatedCartItems, productId, "push");
 
-    const updatedCart = {
-      items: updatedCartItems,
-    };
+    const updatedCart = updateItems(updatedCartItems);
 
     user.cart = updatedCart;
     await user.save();
@@ -62,38 +70,42 @@ export const addToCart = async (req, res) => {
 };
 
 export const getCart = async (req, res) => {
-  const { userId } = req.params;
-  const user = await UserModel.findById(userId).select("cart");
-  const { cart } = await user.populate("cart.items.product").execPopulate();
-  res.json({ cartItems: cart });
+  try {
+    const { user } = await findUser(req.params);
+    const { cart } = await user.populate("cart.items.product").execPopulate();
+    res.json({ cartItems: cart });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 };
 
 export const deleteCartItem = async (req, res) => {
-  const { userId, productId } = req.params;
-  const user = await UserModel.findById(userId);
-  const oldCartItems = user.cart.items;
-  const updatedCartItems = oldCartItems.filter(
-    (cartItem) => cartItem.product.toString() !== productId.toString()
-  );
-  const updatedCart = {
-    items: updatedCartItems,
-  };
-  user.cart = updatedCart;
-  await user.save();
-  const { cart } = await user.populate("cart.items.product").execPopulate();
-  res.json({ cartItems: cart });
+  try {
+    const { user, productId } = await findUser(req.params);
+    const oldCartItems = user.cart.items;
+
+    const updatedCartItems = deleteItem(oldCartItems, productId);
+
+    const updatedCart = updateItems(updatedCartItems);
+
+    user.cart = updatedCart;
+    await user.save();
+    const { cart } = await user.populate("cart.items.product").execPopulate();
+    res.json({ cartItems: cart });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 };
 
 // Order Controller
 export const placeOrder = async (req, res) => {
   try {
-    const { userId, productId, value } = req.body;
-    const user = await UserModel.findById(userId);
+    const { user, productId, value } = await findUser(req.body);
 
     const oldOrdersItem = user.orders.items;
     const updatedOrdersItem = [...oldOrdersItem];
 
-    const orderItemIndex = findIndex(oldOrdersItem, productId);
+    const orderItemIndex = findItemIndex(oldOrdersItem, productId);
     orderItemIndex >= 0
       ? quantityChangeHandler(
           updatedOrdersItem,
@@ -101,48 +113,49 @@ export const placeOrder = async (req, res) => {
           oldOrdersItem,
           value
         )
-      : (updatedOrdersItem[0] = {
-          product: productId,
-          quantity: 1,
-        });
+      : addItem(updatedOrdersItem, productId, "set");
 
-    const updatedOrders = {
-      items: updatedOrdersItem,
-    };
+    const updatedOrders = updateItems(updatedOrdersItem);
 
     user.orders = updatedOrders;
     await user.save();
     const { orders } = await user
       .populate("orders.items.product")
       .execPopulate();
-    res.json({ orders });
+    res.json({ orderItems: orders });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error });
   }
 };
 
 export const getOrders = async (req, res) => {
-  const { userId } = req.params;
-  const user = await UserModel.findById(userId);
-  const { orders } = await user.populate("orders.items.product").execPopulate();
-  res.json({ orders });
+  try {
+    const { user } = await findUser(req.params);
+    const { orders } = await user
+      .populate("orders.items.product")
+      .execPopulate();
+    res.json({ orderItems: orders });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 };
 
 export const deleteOrderItem = async (req, res) => {
-  const { userId, productId } = req.params;
-  const user = await UserModel.findById(userId);
+  try {
+    const { user, productId } = await findUser(req.params);
+    const oldOrderItems = user.orders.items;
 
-  const oldOrderItems = user.orders.items;
-  const updatedOrderItems = oldOrderItems.filter(
-    (orderItem) => orderItem.product.toString() !== productId.toString()
-  );
+    const updatedOrderItems = deleteItem(oldOrderItems, productId);
 
-  const updatedOrder = {
-    items: updatedOrderItems,
-  };
+    const updatedOrder = updateItems(updatedOrderItems);
 
-  user.orders = updatedOrder;
-  await user.save();
-  const { orders } = await user.populate("orders.items.product").execPopulate();
-  res.json({ orders });
+    user.orders = updatedOrder;
+    await user.save();
+    const { orders } = await user
+      .populate("orders.items.product")
+      .execPopulate();
+    res.json({ orderItems: orders });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 };

@@ -50,7 +50,7 @@ export const placeOrderAction =
   (userId, productId, value) => async (dispatch) => {
     try {
       const { data } = await Api.placeOrder(userId, productId, value);
-      dispatch(dispatchAction(PLACE_ORDER_SUCCESS, data.orders));
+      dispatch(dispatchAction(PLACE_ORDER_SUCCESS, data.orderItems));
     } catch (error) {
       console.log(error);
       dispatch(dispatchAction(PLACE_ORDER_FAILURE, error));
@@ -60,7 +60,7 @@ export const placeOrderAction =
 export const getOrderAction = (userId) => async (dispatch) => {
   try {
     const { data } = await Api.getOrder(userId);
-    dispatch(dispatchAction(PLACE_ORDER_SUCCESS, data.orders));
+    dispatch(dispatchAction(PLACE_ORDER_SUCCESS, data.orderItems));
   } catch (error) {
     console.log(error);
     dispatch(dispatchAction(PLACE_ORDER_FAILURE, error));
@@ -71,7 +71,7 @@ export const deleteOrderItemAction =
   (userId, productId) => async (dispatch) => {
     try {
       const { data } = await Api.deleteOrderItem(userId, productId);
-      dispatch(dispatchAction(DELETE_ORDER_ITEM_SUCCESS, data.orders));
+      dispatch(dispatchAction(DELETE_ORDER_ITEM_SUCCESS, data.orderItems));
     } catch (error) {
       console.log(error);
       dispatch(dispatchAction(DELETE_ORDER_ITEM_FAILURE, error));
