@@ -1,12 +1,16 @@
 import React, { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Grid, makeStyles } from "@material-ui/core";
 
-import CartListComponent from "./CartListComponent";
-import PriceDetailsComponent from "./PriceDetailsComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { getCartDataAction } from "../store/Actions/shopActions";
+import {
+  addToCartAction,
+  deleteCartItemAction,
+  getCartDataAction,
+} from "../store/Actions/shopActions";
 import { AuthContext } from "../shared/context/AuthContext";
+import PriceDetailsComponent from "../Shop/PriceDetailsComponent";
+import CardListComponent from "../Shop/CardListComponent";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,11 +37,33 @@ const CartPage = () => {
 
   const { items } = useSelector((state) => state.cartReducer.cartItems);
 
+  const deleteCartItemHandler = (id) => {
+    dispatch(deleteCartItemAction(userId, id));
+  };
+
+  const incrementQuantityHandler = (quantity, productId) => {
+    quantity >= 5
+      ? console.log("We're sorry! Only 5 units allowed in each order")
+      : dispatch(addToCartAction(userId, productId, 1));
+  };
+
+  const decrementQuantityHandler = (quantity, productId) => {
+    quantity > 1
+      ? dispatch(addToCartAction(userId, productId, -1))
+      : dispatch(deleteCartItemAction(userId, productId));
+  };
+
   return (
     <Grid container className={classes.container}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <CartListComponent items={items} />
+          <CardListComponent
+            items={items}
+            title={`My Cart (${items.length})`}
+            deleteHandler={deleteCartItemHandler}
+            incrementQuantityHandler={incrementQuantityHandler}
+            decrementQuantityHandler={decrementQuantityHandler}
+          />
         </Grid>
         <Grid item xs={12} md={4}>
           <div>

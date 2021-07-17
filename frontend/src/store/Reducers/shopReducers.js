@@ -14,8 +14,10 @@ import {
   POST_ADD_TO_CART_SUCCESS,
 } from "../Constants/actionTypes";
 
-const initialState = {
-  cartItems: {},
+const cartState = {
+  cartItems: {
+    items: [],
+  },
   error: "",
 };
 
@@ -26,7 +28,8 @@ const orderState = {
   error: "",
 };
 
-export const cartReducer = (state = initialState, action) => {
+// Cart Reducer
+export const cartReducer = (state = cartState, action) => {
   switch (action.type) {
     case POST_ADD_TO_CART_SUCCESS:
       return updateState(state, { cartItems: action.payload, error: "" });

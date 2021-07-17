@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -9,13 +9,10 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import ProductTitleComonent from "../Product/ProductTitleComponent";
+import ProductTitleComponent from "../Product/ProductTitleComponent";
 import PriceComponent from "../Product/PriceComponent";
 import CounterComponent from "./CounterComponent";
 import utilityClasses from "../util/utilityClasses";
-import { AuthContext } from "../shared/context/AuthContext";
-import { useDispatch } from "react-redux";
-import { deleteOrderItemAction } from "../store/Actions/shopActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,17 +55,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OrderItemComponent = (props) => {
-  const { product, quantity } = props;
+const CardItemComponent = (props) => {
+  const {
+    product,
+    quantity,
+    deleteHandler,
+    incrementQuantityHandler,
+    decrementQuantityHandler,
+  } = props;
   const classes = useStyles();
   const utilClasses = utilityClasses();
-
-  const { userId } = useContext(AuthContext);
-  const dispatch = useDispatch();
-
-  const deleteOrderItemHandler = () => {
-    dispatch(deleteOrderItemAction(userId, product._id));
-  };
 
   return (
     <>
@@ -88,6 +84,7 @@ const OrderItemComponent = (props) => {
                 />
               </div>
             </Grid>
+
             <Grid
               item
               xs={12}
@@ -98,8 +95,11 @@ const OrderItemComponent = (props) => {
               `}
             >
               <CounterComponent
-                quantity={quantity}
                 productId={product._id}
+                quantity={quantity}
+                deleteHandler={deleteHandler}
+                incrementQuantityHandler={incrementQuantityHandler}
+                decrementQuantityHandler={decrementQuantityHandler}
                 className={`
                   ${utilClasses.displayFlex}
                   ${classes.counterComponentStyle}
@@ -115,7 +115,7 @@ const OrderItemComponent = (props) => {
                 to={`/product/${product._id}`}
                 className={utilClasses.linkStyle}
               >
-                <ProductTitleComonent title={product.name} wrap="true" />
+                <ProductTitleComponent title={product.name} wrap="true" />
               </Link>
               <Typography color="textSecondary">{product.subTitle}</Typography>
               <Typography
@@ -145,7 +145,7 @@ const OrderItemComponent = (props) => {
                 <Button className={classes.btnStyle}>Save for later</Button>
                 <Button
                   className={classes.btnStyle}
-                  onClick={deleteOrderItemHandler}
+                  onClick={() => deleteHandler(product._id)}
                 >
                   Delete
                 </Button>
@@ -184,4 +184,4 @@ const OrderItemComponent = (props) => {
   );
 };
 
-export default OrderItemComponent;
+export default CardItemComponent;
