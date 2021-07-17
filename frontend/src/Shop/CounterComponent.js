@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 
 import { IconButton, TextField, makeStyles } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
-
-import { AuthContext } from "../shared/context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   iconBtn: {
