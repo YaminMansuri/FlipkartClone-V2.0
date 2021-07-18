@@ -26,7 +26,7 @@ const ButtonsComponent = (props) => {
   };
 
   const buyNowHandler = () => {
-    dispatch(placeOrderAction(userId, productId));
+    dispatch(placeOrderAction(userId, productId, null, "checkout-product"));
     history.push(`/order`);
   };
 

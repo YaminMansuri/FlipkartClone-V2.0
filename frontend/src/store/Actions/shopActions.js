@@ -6,6 +6,8 @@ import {
   DELETE_ORDER_ITEM_SUCCESS,
   GET_CART_DATA_FAILURE,
   GET_CART_DATA_SUCCESS,
+  PLACE_CART_ORDER_FAILURE,
+  PLACE_CART_ORDER_SUCCESS,
   PLACE_ORDER_FAILURE,
   POST_ADD_TO_CART_FAILURE,
   POST_ADD_TO_CART_SUCCESS,
@@ -47,9 +49,14 @@ export const deleteCartItemAction = (userId, productId) => async (dispatch) => {
 
 // Order Action
 export const placeOrderAction =
-  (userId, productId, value) => async (dispatch) => {
+  (userId, productId, value, orderType) => async (dispatch) => {
     try {
-      const { data } = await Api.placeOrder(userId, productId, value);
+      const { data } = await Api.placeOrder(
+        userId,
+        productId,
+        value,
+        orderType
+      );
       dispatch(dispatchAction(PLACE_ORDER_SUCCESS, data.orderItems));
     } catch (error) {
       console.log(error);

@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import {
   Card,
@@ -38,15 +37,11 @@ const CardListComponent = (props) => {
     headerStyle,
     incrementQuantityHandler,
     decrementQuantityHandler,
+    btnTitle,
+    onClickHandler,
   } = props;
   const classes = useStyles();
   const utilClasses = utilityClasses();
-
-  const history = useHistory();
-
-  const buyNowHandler = () => {
-    history.push("/order");
-  };
 
   return (
     <Card className={classes.cardStyle}>
@@ -55,25 +50,26 @@ const CardListComponent = (props) => {
       <Divider />
 
       <CardContent>
-        {items.map((item) => (
-          <CardItemComponent
-            key={item.product._id}
-            product={item.product}
-            quantity={item.quantity}
-            deleteHandler={deleteHandler}
-            incrementQuantityHandler={incrementQuantityHandler}
-            decrementQuantityHandler={decrementQuantityHandler}
-          />
-        ))}
+        {items &&
+          items.map((item) => (
+            <CardItemComponent
+              key={item.product._id}
+              product={item.product}
+              quantity={item.quantity}
+              deleteHandler={deleteHandler}
+              incrementQuantityHandler={incrementQuantityHandler}
+              decrementQuantityHandler={decrementQuantityHandler}
+            />
+          ))}
       </CardContent>
 
       <CardActions>
         <Button
           variant="contained"
           className={`${classes.btnStyle} ${utilClasses.orange}`}
-          onClick={buyNowHandler}
+          onClick={ onClickHandler}
         >
-          Place Order
+          {btnTitle}
         </Button>
       </CardActions>
     </Card>

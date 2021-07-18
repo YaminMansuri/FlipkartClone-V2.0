@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Grid, makeStyles } from "@material-ui/core";
 
 import {
   deleteOrderItemAction,
-  getOrderAction,
   placeOrderAction,
 } from "../store/Actions/shopActions";
 import { AuthContext } from "../shared/context/AuthContext";
@@ -35,26 +34,22 @@ const OrderPage = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getOrderAction(userId));
-  }, [dispatch, userId]);
 
-  const cart = useSelector((state) => state.cartReducer.cartItems);
   const product = useSelector((state) => state.orderReducer.orders);
 
   const deleteOrderItemHandler = (id) => {
     dispatch(deleteOrderItemAction(userId, id));
   };
 
-  const incrementQuantityHandler = (quantity, productId) => {
+  const incrementQuantityHandler = (quantity, productId, orderType) => {
     quantity >= 5
       ? console.log("We're sorry! Only 5 units allowed in each order")
-      : dispatch(placeOrderAction(userId, productId, 1));
+      : dispatch(placeOrderAction(userId, productId, 1, "checkout-product"));
   };
 
-  const decrementQuantityHandler = (quantity, productId) => {
+  const decrementQuantityHandler = (quantity, productId, orderType) => {
     quantity > 1
-      ? dispatch(placeOrderAction(userId, productId, -1))
+      ? dispatch(placeOrderAction(userId, productId, -1, "checkout-product"))
       : dispatch(deleteOrderItemAction(userId, productId));
   };
 
@@ -70,6 +65,7 @@ const OrderPage = () => {
               deleteHandler={deleteOrderItemHandler}
               incrementQuantityHandler={incrementQuantityHandler}
               decrementQuantityHandler={decrementQuantityHandler}
+              btnTitle="Continue"
             />
           </Grid>
           <Grid item xs={12} md={4}>

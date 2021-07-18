@@ -39,6 +39,9 @@ const App = () => {
         <Route path="/cart" exact>
           <CartPage />
         </Route>
+        <Route path="/order/:orderType" exact>
+          <OrderPage />
+        </Route>
         <Route path="/order" exact>
           <OrderPage />
         </Route>

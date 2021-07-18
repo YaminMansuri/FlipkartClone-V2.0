@@ -35,9 +35,9 @@ const updateItems = (updatedItems) => {
 };
 
 const findUser = async (data) => {
-  const { userId, productId, value } = data;
+  const { userId, productId, value, orderType } = data;
   const user = await UserModel.findById(userId);
-  return { user, productId, value };
+  return { user, productId, value, orderType };
 };
 
 export const addToCart = async (req, res) => {
@@ -97,33 +97,54 @@ export const deleteCartItem = async (req, res) => {
   }
 };
 
-// Order Controller
+// Order Controllers
+
+const orderProduct = (oldOrders, updatedOrders, productId, value) => {
+  const orderItemIndex = findItemIndex(oldOrders, productId);
+
+  if (orderItemIndex >= 0)
+    quantityChangeHandler(updatedOrders, orderItemIndex, oldOrders, value);
+  else {
+    updatedOrders.splice(0, updatedOrders.length - 1);
+    return addItem(updatedOrders, productId, "set");
+  }
+};
+
+const orderCart = (user, updatedOrders) => {
+  const oldCartItems = user.cart.items;
+
+  oldCartItems.forEach((cartItem) => {
+    addItem(updatedOrders, cartItem.product, "push");
+  });
+};
+
 export const placeOrder = async (req, res) => {
   try {
-    const { user, productId, value } = await findUser(req.body);
+    const { user, productId, value, orderType } = await findUser(req.body);
 
-    const oldOrdersItem = user.orders.items;
-    const updatedOrdersItem = [...oldOrdersItem];
+    const oldOrders = user.orders.items;
+    let updatedOrders;
 
-    const orderItemIndex = findItemIndex(oldOrdersItem, productId);
-    orderItemIndex >= 0
-      ? quantityChangeHandler(
-          updatedOrdersItem,
-          orderItemIndex,
-          oldOrdersItem,
-          value
-        )
-      : addItem(updatedOrdersItem, productId, "set");
+    if (orderType === "checkout-product") {
+      updatedOrders = [...oldOrders];
+      orderProduct(oldOrders, updatedOrders, productId, value);
+    } else if (orderType === "checkout-cart") {
+      updatedOrders = [];
+      orderCart(user, updatedOrders);
+    }
 
-    const updatedOrders = updateItems(updatedOrdersItem);
+    const updatedOrdersItem = updateItems(updatedOrders);
 
-    user.orders = updatedOrders;
+    user.orders = updatedOrdersItem;
+
     await user.save();
     const { orders } = await user
       .populate("orders.items.product")
       .execPopulate();
+
     res.json({ orderItems: orders });
   } catch (error) {
+    console.log("Error occured over here!!");
     res.status(400).json({ error });
   }
 };

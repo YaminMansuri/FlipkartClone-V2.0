@@ -9,8 +9,8 @@ export const deleteCartItem = (userId, productId) =>
   axios.delete(`/shop/user/${userId}/cart/${productId}`);
 
 // Order Api
-export const placeOrder = async (userId, productId, value) =>
-  axios.post("/shop/order", { userId, productId, value });
+export const placeOrder = async (userId, productId, value, orderType) =>
+  axios.post("/shop/order", { userId, productId, value, orderType });
 
 export const getOrder = async (userId) =>
   axios.get(`/shop/user/${userId}/order`);

@@ -7,10 +7,12 @@ import {
   addToCartAction,
   deleteCartItemAction,
   getCartDataAction,
+  placeOrderAction,
 } from "../store/Actions/shopActions";
 import { AuthContext } from "../shared/context/AuthContext";
 import PriceDetailsComponent from "../Shop/PriceDetailsComponent";
 import CardListComponent from "../Shop/CardListComponent";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,6 +32,7 @@ const CartPage = () => {
 
   const { userId } = useContext(AuthContext);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getCartDataAction(userId));
@@ -53,6 +56,11 @@ const CartPage = () => {
       : dispatch(deleteCartItemAction(userId, productId));
   };
 
+  const placeOrderHandler = () => {
+    dispatch(placeOrderAction(userId, null, null, "checkout-cart"));
+    history.push("/order");
+  };
+
   return (
     <Grid container className={classes.container}>
       <Grid container spacing={2}>
@@ -63,6 +71,8 @@ const CartPage = () => {
             deleteHandler={deleteCartItemHandler}
             incrementQuantityHandler={incrementQuantityHandler}
             decrementQuantityHandler={decrementQuantityHandler}
+            btnTitle="Place Order"
+            onClickHandler={placeOrderHandler}
           />
         </Grid>
         <Grid item xs={12} md={4}>
