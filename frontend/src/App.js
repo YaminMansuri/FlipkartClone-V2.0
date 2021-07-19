@@ -7,6 +7,7 @@ import ProductDetailsPage from "./ProductDetails/ProductDetailsPage";
 import CartPage from "./Cart/CartPage";
 import { AuthContext } from "./shared/context/AuthContext";
 import OrderPage from "./Order/OrderPage";
+import ConfirmOrderPage from "./Order/ConfirmOrderPage";
 
 const App = () => {
   const [token, setToken] = useState(false);
@@ -39,11 +40,11 @@ const App = () => {
         <Route path="/cart" exact>
           <CartPage />
         </Route>
-        <Route path="/order/:orderType" exact>
-          <OrderPage />
-        </Route>
         <Route path="/order" exact>
           <OrderPage />
+        </Route>
+        <Route path="/confirm-order" exact>
+          <ConfirmOrderPage />
         </Route>
       </Switch>
     );

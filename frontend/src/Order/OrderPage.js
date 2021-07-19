@@ -10,6 +10,7 @@ import {
 import { AuthContext } from "../shared/context/AuthContext";
 import PriceDetailsComponent from "../Shop/PriceDetailsComponent";
 import CardListComponent from "../Shop/CardListComponent";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,6 +35,7 @@ const OrderPage = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const product = useSelector((state) => state.orderReducer.orders);
 
@@ -53,6 +55,10 @@ const OrderPage = () => {
       : dispatch(deleteOrderItemAction(userId, productId));
   };
 
+  const confirmOrderHandler = () => {
+    history.push("/confirm-order");
+  };
+
   return (
     <>
       <Grid container className={classes.container}>
@@ -66,6 +72,7 @@ const OrderPage = () => {
               incrementQuantityHandler={incrementQuantityHandler}
               decrementQuantityHandler={decrementQuantityHandler}
               btnTitle="Continue"
+              onClickHandler={confirmOrderHandler}
             />
           </Grid>
           <Grid item xs={12} md={4}>
