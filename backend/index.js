@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-import shopRoutes from "./routes/shopRoutes.js"
+import shopRoutes from "./routes/shopRoutes.js";
 
 const app = express();
 
@@ -22,7 +22,7 @@ mongoose.connect(
   process.env.URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
-    app.listen(5000, () => {
+    app.listen(5000 || process.env.PORT, () => {
       console.log("Server is up and running");
     });
   }

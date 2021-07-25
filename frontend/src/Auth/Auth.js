@@ -57,13 +57,16 @@ const Auth = (props) => {
   const login = async () => {
     try {
       const { data } = await loginApi(userState);
-      console.log(data.name);
       auth.login(data.userId, data.name, data.token);
       console.log("User logged in");
+      alert("Logged in sucessfully");
       handleClose();
     } catch (error) {
       console.log(error);
       console.log("Authentication Failed");
+      alert(
+        "Authentication failed. If you don't have an account then please create your account first"
+      );
     }
   };
 
@@ -72,10 +75,12 @@ const Auth = (props) => {
       const { data } = await signupApi(userState);
       auth.login(data.userId, data.name, data.token);
       console.log("User signed up");
+      alert("Registered successfully");
       handleClose();
     } catch (error) {
       console.log(error);
       console.log("Authentication Failed");
+      alert("Authentication failed");
     }
   };
 

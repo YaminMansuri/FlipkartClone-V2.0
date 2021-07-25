@@ -22,10 +22,17 @@ const ButtonsComponent = (props) => {
   const history = useHistory();
 
   const addToCartHandler = () => {
+    if (!userId) {
+      return alert("You need to login first.");
+    }
     dispatch(addToCartAction(userId, productId));
+    history.push(`/cart`);
   };
 
   const buyNowHandler = () => {
+    if (!userId) {
+      return alert("You need to login first.");
+    }
     dispatch(placeOrderAction(userId, productId, null, "checkout-product"));
     history.push(`/order`);
   };

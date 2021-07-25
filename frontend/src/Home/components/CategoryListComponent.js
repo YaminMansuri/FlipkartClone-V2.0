@@ -14,16 +14,17 @@ const CategoryListComponent = () => {
   const categories = useSelector((state) => state.categoriesReducer.categories);
 
   return (
-    <>
-      {categories.map((category) => (
-        <CategoryItemComponent
-          key={category._id}
-          category={category.category}
-          categoryTitle={category.categoryTitle}
-          categorySubTitle={category.categorySubTitle}
-        />
-      ))}
-    </>
+    <div>
+      {categories &&
+        categories.map((category) => (
+          <CategoryItemComponent
+            key={category._id}
+            category={category.category}
+            categoryTitle={category.categoryTitle}
+            categorySubTitle={category.categorySubTitle}
+          />
+        ))}
+    </div>
   );
 };
 
